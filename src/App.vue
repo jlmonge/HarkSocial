@@ -1,7 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import Audio from './components/Audio.vue';
+import AvLine from '../node_modules/vue-audio-visual/src/components/AvLine'
+import AvMedia from '../node_modules/vue-audio-visual/src/components/AvMedia'
+import AvBar from '../node_modules/vue-audio-visual/src/components/AvBars'
+
 </script>
 
 <template>
@@ -10,7 +13,13 @@ import Audio from './components/Audio.vue';
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-    <Audio></Audio>
+        <av-line audio-src="jellyjam.mp3">
+  </av-line>
+  <av-bar class = "two" audio-src="jellyjam.mp3">
+  </av-bar>
+      <av-bar audio-src="jellyjam.mp3" bar-color="#ff0000">
+  </av-bar>
+    
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -31,7 +40,9 @@ header {
   display: block;
   margin: 0 auto 2rem;
 }
-
+.two{
+     transform: scaleY(-1)
+}
 nav {
   width: 100%;
   font-size: 12px;
