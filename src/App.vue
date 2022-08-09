@@ -1,14 +1,9 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-// <<<<<<< HEAD
 //import ConversationFeed from './components/ConversationFeed.vue'
-// =======
-import AvLine from '../node_modules/vue-audio-visual/src/components/AvLine'
-import AvMedia from '../node_modules/vue-audio-visual/src/components/AvMedia'
-import AvBar from '../node_modules/vue-audio-visual/src/components/AvBars'
-
-// >>>>>>> 04a3cfd77e292576b14baf463776c34745e7247d
+// import AvLine from '../node_modules/vue-audio-visual/src/components/AvLine'
+// import AvBar from '../node_modules/vue-audio-visual/src/components/AvBars'
 </script>
 
 <template>
@@ -17,13 +12,9 @@ import AvBar from '../node_modules/vue-audio-visual/src/components/AvBars'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-        <av-line audio-src="jellyjam.mp3">
-  </av-line>
-  <av-bar class = "two" audio-src="jellyjam.mp3">
-  </av-bar>
-      <av-bar audio-src="jellyjam.mp3" bar-color="#ff0000">
-  </av-bar>
-    
+      <!-- <av-line audio-src="./public/jellyjam.mp3"></av-line>
+      <av-bar class = "two" audio-src="./public/jellyjam.mp3"></av-bar>
+      <av-bar audio-src="./public/jellyjam.mp3" bar-color="#ff0000"></av-bar> -->
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
