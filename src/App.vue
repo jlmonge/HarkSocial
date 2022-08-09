@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+//import ConversationFeed from './components/ConversationFeed.vue'
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/conversation">Conversation</RouterLink>
       </nav>
     </div>
   </header>
@@ -21,6 +23,10 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
+body, html {
+  background-color: #FFFFFF;
+  min-width: 100%;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -67,11 +73,11 @@ nav a:first-of-type {
     margin: 0 2rem 0 0;
   }
 
-  header .wrapper {
+  /* header .wrapper {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
-  }
+  } */
 
   nav {
     text-align: left;
