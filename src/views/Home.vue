@@ -1,5 +1,5 @@
 <script setup>
-import RaisedButton from './RaisedButton.vue';
+import RaisedButton from '../components/RaisedButton.vue';
 </script>
 
 <template>
@@ -13,7 +13,7 @@ import RaisedButton from './RaisedButton.vue';
         <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
     </div>
     <div class="btn-row">
-        <RaisedButton msg="Listen now"></RaisedButton>
+        <RouterLink to="conversation"><RaisedButton msg="Listen now"></RaisedButton></RouterLink>
     </div>
 </template>
 
