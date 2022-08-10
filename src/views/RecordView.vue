@@ -1,37 +1,22 @@
 <script setup>
 import RaisedButton from '../components/RaisedButton.vue';
+
 import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-    <div class="wrapper">
-        <div class="logo-row">
-            <h1 class="logo">
-                <span class="line1">all</span>
-                <span class="line2">talk</span>
-            </h1>
-        </div>
-        <div class="desc-row">
-            <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
-        </div>
-        <div class="btn-row">
-            <RouterLink :to="{ name: 'record' }">
-                <RaisedButton msg="Listen now"></RaisedButton>
-            </RouterLink>
-        </div>
+    <NavBar />
+    <div class="prompt-row">
+        <p class="prompt">Prompt: Count to 10 in random order</p>
+    </div>
+    <div class="record-row">
+        <RouterLink :to="{ name: 'home' }">
+            <RaisedButton msg="Record now"></RaisedButton>
+        </RouterLink>
     </div>
 </template>
 
 <style scoped>
-.wrapper {
-  animation: 1s appear ease-out;
-  padding: 0 10%;
-}
-
-@keyframes appear {
-  from {opacity: 0%;}
-  to {opacity: 100%}
-}
 .logo-row {
     padding: 0;
 
