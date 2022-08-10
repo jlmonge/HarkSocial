@@ -17,8 +17,20 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/RecordView.vue')
+    },
+    {
+      path: "/register",
+      component: () => import("../views/Register.vue"),
+    },
+    {
+      path: "/sign-in",
+      component: () => import("../views/SignIn.vue"),
+    },
+    {
+      path: "/feed",
+      component: () => import("../views/Feed.vue"),
     }
   ]
-})
+});
 
 export default router
