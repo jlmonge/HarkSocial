@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import firebase from "firebase"
-import App from './App.vue'
+import firebase from 'firebase/compat/app'
+;import App from './App.vue'
 import router from './router'
 
 import './assets/main.css'
@@ -15,7 +15,7 @@ const firebaseConfig = {
     appId: "1:728826059551:web:db74e82738fb3f16c46e2a"
   };
 
-firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 
 const app = createApp(App)
 
