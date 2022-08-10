@@ -5,12 +5,12 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-    <NavBar></NavBar>
+    <NavBar />
     <div class="prompt-row">
-        <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
+        <p class="prompt">Prompt: Count to 10 in random order</p>
     </div>
     <div class="record-row">
-        <RouterLink :to="{ name: 'record' }">
+        <RouterLink :to="{ name: 'home' }">
             <RaisedButton msg="Record now"></RaisedButton>
         </RouterLink>
     </div>
