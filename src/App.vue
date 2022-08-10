@@ -32,7 +32,7 @@ import 'firebase/compat/auth'
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <span v-if="isLoggedIn"
-        >>
+        >
         <button @click="signOut">Logout</button>
       </span>
       <span v-else>
