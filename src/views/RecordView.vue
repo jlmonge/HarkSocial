@@ -1,19 +1,18 @@
 <script setup>
-import RaisedButton from './RaisedButton.vue';
+import RaisedButton from '../components/RaisedButton.vue';
+
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-    <div class="logo-row">
-        <h1 class="logo">
-            <span class="line1">all</span>
-            <span class="line2">talk</span>
-        </h1>
-    </div>
-    <div class="desc-row">
+    <NavBar></NavBar>
+    <div class="prompt-row">
         <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
     </div>
-    <div class="btn-row">
-        <RaisedButton msg="Listen now"></RaisedButton>
+    <div class="record-row">
+        <RouterLink :to="{ name: 'record' }">
+            <RaisedButton msg="Record now"></RaisedButton>
+        </RouterLink>
     </div>
 </template>
 
@@ -22,7 +21,7 @@ import RaisedButton from './RaisedButton.vue';
     padding: 0;
 
     display: flex;
-    justify-content: left;
+    justify-content: center;
     width: 100%;
 }
 .logo {
