@@ -4,23 +4,34 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-    <div class="logo-row">
-        <h1 class="logo">
-            <span class="line1">all</span>
-            <span class="line2">talk</span>
-        </h1>
-    </div>
-    <div class="desc-row">
-        <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
-    </div>
-    <div class="btn-row">
-        <RouterLink :to="{ name: 'record' }">
-            <RaisedButton msg="Listen now"></RaisedButton>
-        </RouterLink>
+    <div class="wrapper">
+        <div class="logo-row">
+            <h1 class="logo">
+                <span class="line1">all</span>
+                <span class="line2">talk</span>
+            </h1>
+        </div>
+        <div class="desc-row">
+            <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
+        </div>
+        <div class="btn-row">
+            <RouterLink :to="{ name: 'record' }">
+                <RaisedButton msg="Listen now"></RaisedButton>
+            </RouterLink>
+        </div>
     </div>
 </template>
 
 <style scoped>
+.wrapper {
+  animation: 1s appear ease-out;
+  padding: 0 10%;
+}
+
+@keyframes appear {
+  from {opacity: 0%;}
+  to {opacity: 100%}
+}
 .logo-row {
     padding: 0;
 
