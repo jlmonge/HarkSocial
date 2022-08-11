@@ -1,4 +1,7 @@
 <script setup>
+<<<<<<< HEAD
+  import { RouterLink, RouterView } from 'vue-router'
+=======
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import firebase from 'firebase/compat/app';
@@ -19,8 +22,17 @@ import 'firebase/compat/auth'
     firebase.auth().signOut()
     router.push('/')
   }
+>>>>>>> main
 </script>
 
 <template>
   <RouterView />
+<<<<<<< HEAD
 </template>
+
+<style scoped>
+
+</style>
+=======
+</template>
+>>>>>>> main
