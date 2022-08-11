@@ -1,9 +1,10 @@
-import { createApp } from 'vue'
+import { createApp, h }from 'vue'
 import { createPinia } from 'pinia'
 import firebase from 'firebase/compat/app'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
+import AudioVisual from 'vue-audio-visual'
 /* firebase config */
 const firebaseConfig = {
     apiKey: "AIzaSyAj1E_ptZEB26r2qR25sraU77pTgTfiqC4",
@@ -15,10 +16,10 @@ const firebaseConfig = {
   };
 
   firebase.initializeApp(firebaseConfig);
-
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+app.use(AudioVisual)
 
 app.mount('#app')

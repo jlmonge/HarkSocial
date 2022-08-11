@@ -1,0 +1,47 @@
+<script setup>
+import AudioVisualizer from './AudioVisualizer.vue';
+</script>
+
+<template>
+    <div id="conversation-feed">
+        <div id="user1">
+            <p>User 1</p>
+            <AudioVisualizer></AudioVisualizer>
+        </div>
+        <div id="user2">
+            <p>User 2</p>
+            <AudioVisualizer></AudioVisualizer>
+        </div>
+    </div>
+</template>
+
+<style scoped>
+#conversation-feed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid #000000;
+    border-radius: 1em;
+    margin: 0 auto;
+    width: 515px;
+    height: 440px;
+}
+
+#user1{
+    margin-top: 25px;
+    padding-bottom: 40px;
+}
+
+#user1 p{
+    margin: 0;
+}
+
+#user2{
+    margin-bottom: 25px;
+    padding-top: 40px;
+}
+
+#user2 p{
+    margin: 0;
+}
+</style>
