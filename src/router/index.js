@@ -3,7 +3,6 @@ import HomeView from '../views/HomeView.vue'
 import Conversation from '../views/Conversation.vue'
 import Profile from '../views/Profile.vue'
 import RecordView from '../views/RecordView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -42,6 +41,11 @@ const router = createRouter({
       path: "/feed",
       name: "feed",
       component: () => import("../views/FeedView.vue"),
+    },
+    {
+      path: "/recorder",
+      name: "recorder",
+      component: () => import("../views/RecorderView.vue"),
     },
     {
       path: "/profile",

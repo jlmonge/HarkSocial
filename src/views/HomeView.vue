@@ -21,6 +21,8 @@ import { RouterLink } from 'vue-router'
         </div>
     </div>
     <RouterLink to="profile"><RaisedButton msg="profile"></RaisedButton></RouterLink>
+        <RouterLink to="recorder"><RaisedButton msg="Deez Nuts"></RaisedButton></RouterLink>
+
 </template>
 
 <style scoped>
