@@ -1,7 +1,7 @@
 <script setup>
 import RaisedButton from '../components/RaisedButton.vue';
 
-import { RouterLink } from 'vue-router' Ra
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
