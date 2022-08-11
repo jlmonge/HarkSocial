@@ -28,6 +28,10 @@ button {
     animation-fill-mode: forwards;
 }
 
+button:active {
+    background-color: rgb(61, 61, 61);
+}
+
 button:hover {
     animation: .25s button-hover ease-out;
     animation-fill-mode: forwards;
