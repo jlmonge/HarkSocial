@@ -6,13 +6,13 @@ import { RouterLink } from 'vue-router'
 
 <template>
     <nav>
-        <RouterLink to="/">
-            <img src="https://cdn.pixabay.com/photo/2021/08/07/07/38/onomatopeia-6527943_1280.png" alt="All Talk logo" width="32" height="32">
-        </RouterLink>
-        <div class="nav-search">
-            <input type="text" placeholder="Search...">
+        <div class="nav-logo">
+            <RouterLink to="/">A T</RouterLink>
         </div>
-        <div class="nav-items">
+        <div class="nav-search">
+            <input type="text" placeholder="Search Friends...">
+        </div>
+        <div class="nav-links">
             <ul>
                 <li><RouterLink to="feed">Feed</RouterLink></li>
                 <li><RouterLink to="profile">Profile</RouterLink></li>
@@ -24,23 +24,39 @@ import { RouterLink } from 'vue-router'
 
 <style scoped>
 nav {
-    overflow: hidden;
+    position: relative;
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    height: 70px;
+    font-size: 1.1em;
+    font-family: 'Barlow';
 }
-img {
-    float: left
+.nav-logo {
+    margin: 0 30px;
 }
-.nav-search {
-    float: center;
+input {
+    padding: 10px 20px;
+    border-radius: 35px;
+    width: 80%;
+    font-size: 1.1em;
+}
+a {
+    text-decoration: none;
+    color: #FFFFFF;
 }
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    float: right;
 }
 li {
-    float: right
+    float: left;
+    padding: 14px 36px;
 }
 </style>
