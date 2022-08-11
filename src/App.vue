@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import firebase from 'firebase/compat/app';
+import firebase from 'firebase/compat/app'
 import { getAuth , onAuthStateChanged} from '@firebase/auth'
 import { ref, watchEffect } from 'vue'
 import 'firebase/compat/auth'

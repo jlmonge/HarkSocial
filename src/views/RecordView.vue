@@ -1,6 +1,6 @@
 <script setup>
-import RaisedButton from '../components/RaisedButton.vue';
-
+import RaisedButton from '../components/RaisedButton.vue'
+import NavBar from '../components/NavBar.vue'
 import { RouterLink } from 'vue-router'
 </script>
 
@@ -10,7 +10,7 @@ import { RouterLink } from 'vue-router'
         <p class="prompt">Prompt: Count to 10 in random order</p>
     </div>
     <div class="record-row">
-        <RouterLink :to="{ name: 'home' }">
+        <RouterLink :to="{ name:'home' }">
             <RaisedButton msg="Record now"></RaisedButton>
         </RouterLink>
     </div>
@@ -19,7 +19,6 @@ import { RouterLink } from 'vue-router'
 <style scoped>
 .logo-row {
     padding: 0;
-
     display: flex;
     justify-content: center;
     width: 100%;

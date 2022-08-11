@@ -1,5 +1,5 @@
 <script setup>
-import RaisedButton from '../components/RaisedButton.vue';
+import RaisedButton from '../components/RaisedButton.vue'
 import { RouterLink } from 'vue-router'
 </script>
 
@@ -15,7 +15,7 @@ import { RouterLink } from 'vue-router'
             <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
         </div>
         <div class="btn-row">
-            <RouterLink :to="{ name: 'record' }">
+            <RouterLink :to="{ name:'record' }">
                 <RaisedButton msg="Listen now"></RaisedButton>
             </RouterLink>
         </div>
