@@ -20,13 +20,18 @@ import { RouterLink } from 'vue-router'
             </RouterLink>
         </div>
     </div>
-    <RouterLink to="profile"><RaisedButton msg="profile"></RaisedButton></RouterLink>
+    <!--<RouterLink to="profile"><RaisedButton msg="profile"></RaisedButton></RouterLink>-->
 </template>
 
 <style scoped>
 .wrapper {
-  animation: 1s appear ease-out;
-  padding: 0 10%;
+    animation: 1s appear ease-out;
+    padding: 0 10%;
+    height: 100vh;
+    font-family: 'Barlow';
+    background-image: url("src/assets/color_visualizer.gif");
+    background-repeat: repeat;
+    background-position: 0% 100%;
 }
 
 @keyframes appear {
