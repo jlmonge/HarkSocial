@@ -14,7 +14,7 @@ import { RouterLink } from 'vue-router'
         </div>
         <div class="nav-links">
             <ul>
-                <li><RouterLink to="feed">Feed</RouterLink></li>
+                <li><RouterLink to="conversation">Feed</RouterLink></li>
                 <li><RouterLink to="profile">Profile</RouterLink></li>
                 <li><a href="">Logout</a></li>
             </ul>
