@@ -1,6 +1,6 @@
 <script setup>
 import AudioVisualizer from './AudioVisualizer.vue';
-import RecordButton from './RecordButton.vue';
+//import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
 </script>
 
@@ -10,7 +10,9 @@ import RaisedButton from './RaisedButton.vue';
             <p>User 1</p>
             <AudioVisualizer></AudioVisualizer>
         </div>
-        <RaisedButton msg="Record Now"></RaisedButton>
+        <RouterLink to="record">
+            <RaisedButton msg="Record Now"></RaisedButton>
+        </RouterLink>
         <div id="user2">
             <p>User 2</p>
             <AudioVisualizer></AudioVisualizer>

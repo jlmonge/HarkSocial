@@ -1,6 +1,6 @@
 <template>
     <div class="border">
-  <button class="inner"></button>
+      <button class="inner"></button>
     </div>
 </template>
 

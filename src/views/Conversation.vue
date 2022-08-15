@@ -2,6 +2,8 @@
     import ConversationFeed from '@/components/ConversationFeed.vue'
     import Prompt from '@/components/Prompt.vue'
     import NavBar from '../components/NavBar.vue';
+    import firebase from 'firebase/compat';
+    console.log(firebase.auth().currentUser)
 </script>
 
 <template>
