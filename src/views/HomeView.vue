@@ -7,15 +7,15 @@ import { RouterLink } from 'vue-router'
     <div class="wrapper">
         <div class="logo-row">
             <h1 class="logo">
-                <span class="line1">all</span>
-                <span class="line2">talk</span>
+                <span class="line1">hark</span>
+                <span class="line2"></span>
             </h1>
         </div>
         <div class="desc-row">
-            <p class="desc">Our product, All Talk, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
+            <p class="desc">Our product, Hark, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
         </div>
         <div class="btn-row">
-            <RouterLink :to="{ name:'record' }">
+            <RouterLink to="signin">
                 <RaisedButton msg="Listen now"></RaisedButton>
             </RouterLink>
         </div>
@@ -40,14 +40,13 @@ import { RouterLink } from 'vue-router'
 }
 .logo-row {
     padding: 0;
-
     display: flex;
     justify-content: center;
     width: 100%;
 }
 .logo {
     font-size: 5em;
-    font-style: italic;
+    /* font-style: italic; */
     font-weight: normal;
     letter-spacing: 0.5em;
     user-select: none;

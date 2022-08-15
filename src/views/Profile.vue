@@ -1,8 +1,10 @@
 <script setup>
 import FriendCard from '../components/FriendCard.vue'
+import NavBar from '../components/NavBar.vue';
 </script>
 
 <template>
+    <NavBar></NavBar>
     <div id="user-info">
         <img src="../assets/placeholder.png" />
         <h2>User Name</h2>
