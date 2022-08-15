@@ -19,7 +19,20 @@
   import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
   import firebase from 'firebase/compat';
   import { useRouter } from 'vue-router' // import router
-
+  import moment from 'moment'   // used for current
+import {
+  collection,
+  doc,
+  addDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  setDoc,
+  getFirestore
+} from 'firebase/firestore' ;
+  const db = getFirestore()
   const email = ref('')
   const password = ref('')
   const errMsg = ref() // ERROR MESSAGE
@@ -52,17 +65,30 @@
   const emailReg = ref('')
   const passwordReg = ref('')
   const routerReg = useRouter() // get a reference to our vue router
+  const auth = getAuth();
+  const today = String(moment().format('MM/DD/YYYY'));
   const register = () => {
     firebase
       .auth() // get the auth api
       .createUserWithEmailAndPassword(emailReg.value, passwordReg.value) // need .value because ref()
       .then((data) => {
+          let user = auth.currentUser;
         console.log('Successfully registered!');
+ if(auth.currentUser != null) { setDoc(doc(db, "users",emailReg.value), {
+  email: emailReg.value,
+  UserID: user.uid,
+  dateRegistered: today,
+  friendsList: [],
+  userPairs: []
+});
+ }
         router.push('/conversation') // redirect to the feed
+        //do set doc
+
       })
       .catch(error => {
-        console.log(error.code)
-        alert(error.message);
+        console.log(error)
+        alert(error);
       });
   }
 </script>
