@@ -3,7 +3,7 @@
     import Prompt from '@/components/Prompt.vue'
     import NavBar from '../components/NavBar.vue';
     import firebase from 'firebase/compat';
-    console.log(firebase.auth().currentUser)
+    // console.log(firebase.auth().currentUser.uid)
 </script>
 
 <template>

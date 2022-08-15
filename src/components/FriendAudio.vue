@@ -8,15 +8,17 @@
         const storage = getStorage();
         const storageRef = ref(storage);
 
-        const today = new Date();
-        const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`
-        const user = firebase.auth().currentUser.uid
+        // const today = new Date();
+        // const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`
+        // const user = firebase.auth().currentUser.uid
 
-        const userAudioRef = ref(storageRef, `${ user + date }`)
+        const friendPath = 'VhDlHVyyx9f4bXlZdyNSyuxTG6k12022815'
 
-        getDownloadURL(userAudioRef)
+        const friendAudioRef = ref(storageRef, `${ friendPath }`)
+
+        getDownloadURL(friendAudioRef)
             .then((url) => {
-                const audioControls = document.getElementById('vis')
+                const audioControls = document.getElementById('vis2')
                 audioControls.setAttribute('src', url)
             })
             .catch((error) => {
@@ -26,7 +28,7 @@
 </script>
 
 <template>
-    <audio id="vis" src="" controls>
+    <audio id="vis2" src="" controls>
         <source type="audio/mpeg">
     </audio>
 </template>
