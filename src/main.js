@@ -16,6 +16,7 @@ const firebaseConfig = {
   };
 
   firebase.initializeApp(firebaseConfig);
+
 const app = createApp(App)
 
 app.use(createPinia())
