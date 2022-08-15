@@ -1,8 +1,8 @@
 <script setup>
     //import AvBar from '../../node_modules/vue-audio-visual/src/components/AvBars'
     import { getDownloadURL, getStorage, ref } from "firebase/storage";
-// import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-  import firebase from 'firebase/compat';
+    //import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+    import firebase from 'firebase/compat';
     // Create a reference with an initial file path and name
     //function getStorageAudio() {
         const storage = getStorage();
@@ -10,7 +10,7 @@
 
         const today = new Date();
         const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`
-        const user = firebase.auth().currentUser
+        const user = firebase.auth().currentUser.uid
 
         const userAudioRef = ref(storageRef, `${ user + date }`)
 

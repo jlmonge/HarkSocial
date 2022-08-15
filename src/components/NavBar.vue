@@ -12,7 +12,7 @@ import { RouterLink } from 'vue-router'
         isLoggedIn.value = true 
         var email = user.email
         var uuid = user.UserID
-        console.log('logged in :'+ email )
+        // console.log(firebase.auth().currentUser.email )
         // if we have a user
       } else {
         isLoggedIn.value = false // if we do not
