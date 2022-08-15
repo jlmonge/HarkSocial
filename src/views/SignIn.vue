@@ -73,7 +73,7 @@ import {
       .createUserWithEmailAndPassword(emailReg.value, passwordReg.value) // need .value because ref()
       .then((data) => {
           let user = auth.currentUser;
-        console.log('Successfully registered!');
+       
  if(auth.currentUser != null) { setDoc(doc(db, "users",emailReg.value), {
   email: emailReg.value,
   UserID: user.uid,
@@ -82,7 +82,7 @@ import {
   userPairs: []
 });
  }
-        router.push('/conversation') // redirect to the feed
+         alert("Succesfully registered! Please log-in above."); // redirect to the feed
         //do set doc
 
       })
