@@ -1,10 +1,15 @@
-<script setup>
+<script>
 import RaisedButton from '../components/RaisedButton.vue';
 import { getAuth , onAuthStateChanged} from '@firebase/auth'
 import { ref, watchEffect } from 'vue'
 import 'firebase/compat/auth'
+import { mapStores } from 'pinia';
+import useEmailStore from '../stores/emailStore.js'
 import firebase from 'firebase/compat/app';
+import { RouterLink } from 'vue-router'
+
  const isLoggedIn = ref(true)
+
   // runs after firebase is initialized
   firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -23,7 +28,12 @@ import firebase from 'firebase/compat/app';
     console.log('signed out returning to home page')
     router.push('/')
   }
-import { RouterLink } from 'vue-router'
+export default{
+    computed : {
+        ...mapStores(useEmailStore)
+    },
+    }
+
 </script>
 
 <template>

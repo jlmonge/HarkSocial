@@ -42,6 +42,7 @@ import {
       .auth()
       .signInWithEmailAndPassword(email.value, password.value) // THIS LINE CHANGED
       .then((data) => {
+          this.emailStore.email = user.uid;
         console.log('Successfully logged in!');
         router.push('/conversation') // redirect to the feed
       })
@@ -73,7 +74,7 @@ import {
       .createUserWithEmailAndPassword(emailReg.value, passwordReg.value) // need .value because ref()
       .then((data) => {
           let user = auth.currentUser;
-       
+  this.emailStore.email = user.uid;
  if(auth.currentUser != null) { setDoc(doc(db, "users",emailReg.value), {
   email: emailReg.value,
   UserID: user.uid,

@@ -1,11 +1,13 @@
-<script setup>
+<script>
     import ConversationFeed from '@/components/ConversationFeed.vue'
     import Prompt from '@/components/Prompt.vue'
     import NavBar from '../components/NavBar.vue';
     import { getFirestore,collection, getDocs, snapshotEqual } from '@firebase/firestore';
-    const db = getFirestore();
+import { mapStores } from 'pinia';
+import useEmailStore from '../stores/emailStore.js'   
+ const db = getFirestore();
     const colRef = collection(db,'users')
-    
+
         getDocs(colRef)
         .then((snapshot) => {
             let allUsers = [];
@@ -18,7 +20,13 @@
             console.log(err.message)
         })
 
-        
+        console.log(this.emailStore.email)
+
+   export default{
+    computed : {
+        ...mapStores(useEmailStore)
+    },
+    }     
         
 </script>
 
