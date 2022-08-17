@@ -1,13 +1,11 @@
 <script setup>
-import RaisedButton from '../components/RaisedButton.vue';
-
 import { RouterLink } from 'vue-router'
 </script>
 
 <template>
     <nav>
         <div class="nav-logo">
-            <RouterLink to="/">A T</RouterLink>
+            <RouterLink to="/">HARK</RouterLink>
         </div>
         <div class="nav-search">
             <input type="text" placeholder="Search Friends...">

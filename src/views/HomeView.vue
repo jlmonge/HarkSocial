@@ -12,11 +12,11 @@ import { RouterLink } from 'vue-router'
             </h1>
         </div>
         <div class="desc-row">
-            <p class="desc">Our product, Hark, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
+            <p class="desc">Hark is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
         </div>
         <div class="btn-row">
             <RouterLink to="signin">
-                <RaisedButton msg="Listen now"></RaisedButton>
+                <RaisedButton msg="Get started"></RaisedButton>
             </RouterLink>
         </div>
     </div>
@@ -29,8 +29,7 @@ import { RouterLink } from 'vue-router'
     padding: 0 10%;
     height: 100vh;
     font-family: 'Barlow';
-    background-image: url("src/assets/color_visualizer.gif");
-    background-repeat: repeat;
+    background-image: url("../../src/assets/color_visualizer.gif");
     background-position: 0% 100%;
 }
 

@@ -19,7 +19,7 @@ const userAudio = ref(storageRef, `${ user + date }`)
 let constraintObj = { 
         audio: true, 
         video: false
-    }; 
+}; 
 
 navigator.mediaDevices.getUserMedia(constraintObj)
 .then(function(mediaStreamObj) {
@@ -69,8 +69,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
     <main>        
         <button id="btnStart">START RECORDING</button><br/>
-        <button id="btnStop">STOP RECORDING</button>
-        
+        <button id="btnStop">STOP RECORDING</button><br/>
         <audio id="aud2" controls></audio>
     </main>
 
