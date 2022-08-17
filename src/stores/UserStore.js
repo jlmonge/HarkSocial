@@ -5,7 +5,7 @@ export const userStore = defineStore("main",{
   state: () => ({
     isLoggedIn: false,
     email: 'email',
-    userID: -1,
+    uuid: -1,
   }),
 
   getters: {
@@ -21,12 +21,16 @@ export const userStore = defineStore("main",{
       this.userID = '-1';
       console.log(this.isLoggedIn + ','+this.email+','+this.userID +'\nLog Out Pinia success');
     },
+    printMessage(){
+      // console.log("Pinia test")
+      console.log(this.isLoggedIn + ','+this.email+','+this.userID +'\nStore user Pinia success');
+    },
 
     storeUser(isLog,mail,ID){
       this.isLoggedIn = isLog;
       this.email = mail;
       this.userID = ID;
-      console.log(this.isLoggedIn + ','+this.email+','+this.userID +'\nStore user Pinia success');
+      console.log(this.isLoggedIn + ','+this.email+','+this.uuid +'\nStore user Pinia success');
     },
 
   }

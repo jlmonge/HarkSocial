@@ -31,7 +31,14 @@
       .signInWithEmailAndPassword(email.value, password.value) // THIS LINE CHANGED
       .then((data) => {
         console.log('Storing user pinia')
-        main.storeUser(true,email.value,user.uid);
+       
+//         main.$patch({
+//   isLoggedIn: true,
+//   email: email.value,
+
+// })
+main.email = email.value;
+main.isLoggedIn = true;
         console.log('Pinia successful')
         console.log('Successfully logged in!');
          router.push('/conversation') // redirect to the feed
@@ -91,6 +98,10 @@
       <h1>Login</h1>
       <p><input type="text" placeholder="Email" v-model="email" /></p>
       <p><input type="password" placeholder="Password" v-model="password" /></p>
+
+
+     
+      <RaisedButton @click="main.printMessage()" msg="deez nut"></RaisedButton>
       <RaisedButton @click="signIn" msg="Sign in"></RaisedButton>
       <p v-if="errMsg">{{ errMsg }}</p>
     </div>
@@ -170,3 +181,10 @@ span {
   }
 }
 </style>
+
+
+<!-- main.$patch({
+  isLoggedIn: true,
+  email: email.value,
+  uuid: user.uid,
+}) -->
