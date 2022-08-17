@@ -2,6 +2,7 @@
 import AudioVisualizer from './AudioVisualizer.vue';
 //import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
+import FriendAudio from './FriendAudio.vue'
 </script>
 
 <template>
@@ -15,7 +16,7 @@ import RaisedButton from './RaisedButton.vue';
         </RouterLink>
         <div id="user2">
             <p>User 2</p>
-            <AudioVisualizer></AudioVisualizer>
+            <FriendAudio></FriendAudio>
         </div>
     </div>
 </template>

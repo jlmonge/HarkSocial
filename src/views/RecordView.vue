@@ -9,7 +9,7 @@ import { uploadBytes, getStorage, ref } from "firebase/storage";
 const today = new Date();
 const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`
 
-const user = firebase.auth().currentUser
+const user = firebase.auth().currentUser.uid
 console.log(user)
 
 const storage = getStorage();
