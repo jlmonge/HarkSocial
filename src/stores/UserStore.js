@@ -4,8 +4,8 @@ import { defineStore } from 'pinia'
 export const userStore = defineStore("main",{
   state: () => ({
     isLoggedIn: false,
-    email: 'email',
-    uuid: -1,
+    email: undefined,
+    uuid: undefined,
   }),
 
   getters: {
@@ -17,13 +17,13 @@ export const userStore = defineStore("main",{
   actions: {
     logOut() {
       this.isLoggedIn = false;
-      this.email = 'email';
-      this.userID = '-1';
+      this.email = undefined;
+      this.userID = undefined;
       console.log(this.isLoggedIn + ','+this.email+','+this.userID +'\nLog Out Pinia success');
     },
     printMessage(){
       // console.log("Pinia test")
-      console.log(this.isLoggedIn + ','+this.email+','+this.userID +'\nStore user Pinia success');
+      console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + '\n');
     },
 
     storeUser(isLog,mail,ID){

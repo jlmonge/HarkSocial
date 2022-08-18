@@ -101,7 +101,7 @@ main.isLoggedIn = true;
 
 
      
-      <RaisedButton @click="main.printMessage()" msg="deez nut"></RaisedButton>
+      <RaisedButton @click="main.printMessage()" msg="check pinia data"></RaisedButton>
       <RaisedButton @click="signIn" msg="Sign in"></RaisedButton>
       <p v-if="errMsg">{{ errMsg }}</p>
     </div>
