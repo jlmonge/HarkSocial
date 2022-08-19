@@ -3,12 +3,16 @@ import AudioVisualizer from './AudioVisualizer.vue';
 //import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
 import FriendAudio from './FriendAudio.vue'
+import Username from './Username.vue'
+import firebase from 'firebase/compat';
+
+const user = firebase.auth().currentUser.email
 </script>
 
 <template>
     <div id="conversation-feed">
         <div id="user1">
-            <p>User 1</p>
+            <Username username=user ></Username>
             <AudioVisualizer></AudioVisualizer>
         </div>
         <RouterLink to="record">

@@ -12,7 +12,7 @@ import { RouterLink } from 'vue-router'
             </h1>
         </div>
         <div class="desc-row">
-            <p class="desc">Our product, Hark, is a platform that creates a safe space for empathetic conversations – using the user’s own voice.</p>
+            <p class="desc">A platform for empathetic conversations – using the user’s own voice.</p>
         </div>
         <div class="btn-row">
             <RouterLink to="signin">
@@ -20,7 +20,6 @@ import { RouterLink } from 'vue-router'
             </RouterLink>
         </div>
     </div>
-    <!--<RouterLink to="profile"><RaisedButton msg="profile"></RaisedButton></RouterLink>-->
 </template>
 
 <style scoped>
@@ -29,7 +28,7 @@ import { RouterLink } from 'vue-router'
     padding: 0 10%;
     height: 100vh;
     font-family: 'Barlow';
-    background-image: url("src/assets/color_visualizer.gif");
+    background-image: url("../../src/assets/color_visualizer.gif");
     background-repeat: repeat;
     background-position: 0% 100%;
 }
