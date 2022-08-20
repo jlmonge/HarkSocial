@@ -47,6 +47,7 @@
   }
   const emailReg = ref('')
   const passwordReg = ref('')
+  const dobReg = ref('')
   const routerReg = useRouter() // get a reference to our vue router
   const auth = getAuth();
   const today = String(moment().format('MM/DD/YYYY'));
@@ -92,7 +93,7 @@
       <p><input type="password" placeholder="Password" v-model="passwordReg" /></p>
       <div id="birthday">
         <p id="birthday-label">Birthday</p>
-        <input type="date" name="birthday-dob">
+        <input type="date" name="birthday-dob" v-model="dobReg">
       </div>
       <p></p>
       <RaisedButton @click="register" msg="Register"></RaisedButton>

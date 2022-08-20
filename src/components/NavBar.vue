@@ -30,7 +30,7 @@ import { RouterLink } from 'vue-router'
 <template>
     <nav>
         <div class="nav-logo">
-            <RouterLink to="/">HARK</RouterLink>
+            <RouterLink to="/">Hark</RouterLink>
         </div>
         <div class="nav-search">
             <!-- <input type="text" placeholder="Search Friends..."> -->
@@ -38,6 +38,7 @@ import { RouterLink } from 'vue-router'
         </div>
         <div class="nav-links">
             <ul>
+                <li><RouterLink to="add">Add Friends</RouterLink></li>
                 <li><RouterLink to="conversation">Feed</RouterLink></li>
                 <li><RouterLink to="profile">Profile</RouterLink></li>
                 <button @click="signOut"><RouterLink to="/">Log Out</RouterLink></button>
@@ -57,7 +58,7 @@ nav {
     background-color: black;
     margin: 0;
     padding: 0;
-    height: 70px;
+    height: 12.5vh;
     font-size: 1.1em;
     font-family: 'Barlow';
 }

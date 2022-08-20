@@ -3,14 +3,14 @@ import RaisedButton from '../components/RaisedButton.vue'
 import NavBar from '../components/NavBar.vue'
 import { RouterLink } from 'vue-router'
 import { uploadBytes, getStorage, ref } from "firebase/storage";
-// import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
   import firebase from 'firebase/compat';
 
 const today = new Date();
-const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`
+const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`;
 
-const user = firebase.auth().currentUser.uid
-console.log(user)
+const user = firebase.auth().currentUser.uid;
+console.log(user);
 
 const storage = getStorage();
 const storageRef = ref(storage);
