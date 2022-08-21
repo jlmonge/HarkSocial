@@ -1,9 +1,14 @@
 <script>
+    // TODO:
+    // You can't add yourself.
+    // _ is already your friend.
     import RaisedButton from '../components/RaisedButton.vue'
     import NavBar from '../components/NavBar.vue';
-    import db from '@/firebase'
+    import { db } from '@/firebase'
     import { ref, onMounted } from 'vue'
-    import { collection, getDocs } from 'firebase/firestore'
+    import { collection, query, where, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore'
+    import { ref as dbRef, child, get, getDatabase } from 'firebase/database'
+    import { getAuth, onAuthStateChanged } from "firebase/auth"
 
     export default {
         components: {
@@ -18,15 +23,14 @@
             }
         },
         async created() { 
-                const querySnapshot = await getDocs(collection(db, "users"));
-                querySnapshot.forEach((doc) => {
-                    // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.name, " => ", doc.data());
-                });
+            /*const querySnapshot = await getDocs(collection(db, "users"));
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.name, " => ", doc.data());
+            });*/
         },
         methods: {
-            handleSubmit: function() { // check data and submit to database
-                //console.log(this.$refs.emailField.value);
+            async handleSubmit() { // check data and submit to database
                 this.email = this.$refs.emailField.value;
                 const isValid = String(this.email)
                     .toLowerCase()
@@ -35,10 +39,41 @@
                     );
                 this.emailError = !isValid;
                 if (!this.emailError) {
-                    console.log('VALID!');
+                    await this.checkAddedUser(this.email);
                 }
-                window.console.log('email:', this.email);
+
                 this.submitted = true;
+            },
+            async checkAddedUser(email) {
+                // check if user exists
+                const addeeRef = doc(db, "users", email);
+                const addeeSnap = await getDoc(addeeRef);
+
+                if (addeeSnap.exists()) {
+                    console.log("Document data:", addeeSnap.data());
+
+                    const auth = getAuth();
+                    const currentUserEmail = auth.currentUser.email;
+                    const adderRef = doc(db, "users", currentUserEmail);
+                    const adderSnap = await getDoc(adderRef);
+                    console.log("Document data:", adderSnap.data());
+                    // check if users already friends
+                    // coming soon
+                    
+                    // adds friend (if already friends, nothing)
+                    await updateDoc(addeeRef, {
+                        friendsList: arrayUnion(currentUserEmail)
+                    });
+                    await updateDoc(adderRef, {
+                        friendsList: arrayUnion(email)
+                    });
+
+                    console.log("successfully added each other");
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+                
             },
         }
     }
