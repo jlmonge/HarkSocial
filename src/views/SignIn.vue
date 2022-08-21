@@ -4,6 +4,7 @@
   import firebase from 'firebase/compat';
   import { useRouter } from 'vue-router' // import router
   import RaisedButton from '../components/RaisedButton.vue';
+  import {userStore} from '../stores/UserStore.js'
 
   import moment from 'moment'   // used for current
   import {
@@ -18,6 +19,7 @@
     setDoc,
     getFirestore
   } from 'firebase/firestore' ;
+  const main = userStore();
   const db = getFirestore()
   const email = ref('')
   const password = ref('')
@@ -28,8 +30,18 @@
       .auth()
       .signInWithEmailAndPassword(email.value, password.value) // THIS LINE CHANGED
       .then((data) => {
+        console.log('Storing user pinia')
+       
+//         main.$patch({
+//   isLoggedIn: true,
+//   email: email.value,
+
+// })
+main.email = email.value;
+main.isLoggedIn = true;
+        console.log('Pinia successful')
         console.log('Successfully logged in!');
-        router.push('/conversation') // redirect to the feed
+         router.push('/conversation') // redirect to the feed
       })
       .catch(error => {
         switch (error.code) {
@@ -57,13 +69,13 @@
       .createUserWithEmailAndPassword(emailReg.value, passwordReg.value) // need .value because ref()
       .then((data) => {
           let user = auth.currentUser;
-       
+
  if(auth.currentUser != null) { setDoc(doc(db, "users",emailReg.value), {
   email: emailReg.value,
   UserID: user.uid,
   dateRegistered: today,
   friendsList: [],
-  userPairs: []
+  userPairs: [],
 });
  }
          alert("Succesfully registered! Please log-in above."); // redirect to the feed
@@ -74,7 +86,11 @@
         console.log(error)
         alert(error);
       });
+
+
   }
+
+
 </script>
 
 <template>
@@ -83,6 +99,10 @@
       <h1>Login</h1>
       <p><input type="text" placeholder="Email" v-model="email" /></p>
       <p><input type="password" placeholder="Password" v-model="password" /></p>
+
+
+     
+      <RaisedButton @click="main.printMessage()" msg="check pinia data"></RaisedButton>
       <RaisedButton @click="signIn" msg="Sign in"></RaisedButton>
       <p v-if="errMsg">{{ errMsg }}</p>
     </div>
@@ -162,3 +182,10 @@ span {
   }
 }
 </style>
+
+
+<!-- main.$patch({
+  isLoggedIn: true,
+  email: email.value,
+  uuid: user.uid,
+}) -->
