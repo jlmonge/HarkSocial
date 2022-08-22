@@ -29,11 +29,16 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     let audSave = document.getElementById('aud2');
     let mediaRecorder = new MediaRecorder(mediaStreamObj);
     var countdown;
+    let counter = 0;
     let chunks = [];
     
     start.addEventListener('click', (ev)=>{
 
         let timeleft = 9;
+
+        counter ++;
+
+        document.getElementById("attempts").innerHTML = "Attempts:" + counter;
 
         mediaRecorder.start();
         console.log(mediaRecorder.state);
@@ -51,8 +56,22 @@ navigator.mediaDevices.getUserMedia(constraintObj)
            timeleft -= 1;
            }, 1000);
 
+           //counts if event is clicked twice, if so the button is disabled, otherwise the user can still record until attempts are reached
+        if(counter >= 2){
+           start.setAttribute('disabled',true);
+           document.getElementById("attempts").innerHTML = "Out of Attempts";
+
+           //sets time to how long the user isn't able to record
+           setTimeout(function(){
+           start.removeAttribute('disabled');
+           counter = 0;
+           },5000);
+       }
+
+
     })
     stop.addEventListener('click', (ev)=>{
+
         mediaRecorder.stop();
 
         // stops timer, resets when start is clicked again
@@ -61,9 +80,11 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
         console.log(mediaRecorder.state);
     });
+
     mediaRecorder.ondataavailable = function(ev) {
         chunks.push(ev.data);
     }
+    
     mediaRecorder.onstop = (ev)=>{
         let blob = new Blob(chunks, { 'type' : 'audio/mpeg;' });
         uploadBytes(userAudio, blob).then((snapshot) => {
@@ -94,6 +115,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     <main>        
         <button id="btnStart">START RECORDING</button><br/>
         <div id="countdown"></div>
+        <div id="attempts"></div>
         <button id="btnStop">STOP RECORDING</button><br/>
         <audio id="aud2" controls></audio>
     </main>
