@@ -28,14 +28,37 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     let stop = document.getElementById('btnStop');
     let audSave = document.getElementById('aud2');
     let mediaRecorder = new MediaRecorder(mediaStreamObj);
+    var countdown;
     let chunks = [];
     
     start.addEventListener('click', (ev)=>{
+
+        let timeleft = 9;
+
         mediaRecorder.start();
         console.log(mediaRecorder.state);
+
+        //countdowns time, stops recording when 10 seconds is reached, other wise displays countdown
+        countdown = setInterval(function(){
+           if(timeleft <= 0){
+               clearInterval(countdown);
+               document.getElementById("countdown").innerHTML = "Time's up!";
+               mediaRecorder.stop();
+           }
+           else {
+                   document.getElementById("countdown").innerHTML = timeleft + " seconds left";
+                   }
+           timeleft -= 1;
+           }, 1000);
+
     })
     stop.addEventListener('click', (ev)=>{
         mediaRecorder.stop();
+
+        // stops timer, resets when start is clicked again
+       clearInterval(countdown);
+       document.getElementById("countdown").innerHTML = "Recording Stopped";
+
         console.log(mediaRecorder.state);
     });
     mediaRecorder.ondataavailable = function(ev) {
@@ -49,6 +72,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
         chunks = [];
         let audioURL = window.URL.createObjectURL(blob);
         audSave.src = audioURL;
+        document.getElementById("message").innerHTML = "File uploaded successfully";
     }
 })
 .catch(function(err) { 
@@ -69,6 +93,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
     <main>        
         <button id="btnStart">START RECORDING</button><br/>
+        <div id="countdown"></div>
         <button id="btnStop">STOP RECORDING</button><br/>
         <audio id="aud2" controls></audio>
     </main>
