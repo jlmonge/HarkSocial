@@ -6,6 +6,7 @@ export const userStore = defineStore("main",{
     isLoggedIn: false,
     email: undefined,
     uuid: undefined,
+    isAdmin: false,
   }),
 
   getters: {
@@ -23,7 +24,7 @@ export const userStore = defineStore("main",{
     },
     printMessage(){
       // console.log("Pinia test")
-      console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + '\n');
+      console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + ' |  isAdmin:'  + this.isAdmin  + '\n');
     },
 
     storeUser(isLog,mail,ID){
