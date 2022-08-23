@@ -8,19 +8,39 @@ const main = userStore();
 
 import { getFirestore, collection, getDocs, snapshotEqual } from '@firebase/firestore'
 const db = getFirestore()
-const userRef = collection(db, 'users')
+const userRef = collection(db, 'friends')
 const allUsers = []
-
+var friendsList = []
 getDocs(userRef)
     .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
             allUsers.push({...doc.data(), id: doc.id})
         })
         console.log(allUsers)
+
+console.log('beginning loop')
+for(let i = 0; i < allUsers.length; i++){
+    console.log('running loop #' + i)
+    // console.log(allUsers[i].user1)
+    if (allUsers[i].user1.toLowerCase()
+ ===main.email.toLowerCase())
+ {
+    console.log("first if statement ran")
+        friendsList.push(allUsers[i].user2)
+    }
+    if (allUsers[i].user2.toLowerCase() === main.email.toLowerCase()) {
+        console.log("second statement ran")
+        friendsList.push(allUsers[i].user1)
+    }
+    // console.log("your friend #" + i + " " + friendsList[i])
+}
+console.log(friendsList)
     })
     .catch(err => {
         console.log(err.message)
     })
+
+
 
 function shuffle() {
     allUsers.forEach(user => {
