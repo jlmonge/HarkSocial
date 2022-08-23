@@ -19,7 +19,7 @@ if (main.isLoggedIn === true){
 else {
     isLoggedIn = false;
     console.log('User not logged in, returning to home page.')
-        router.push('/')
+    router.push('/')
 }
   // runs after firebase is initialized
 //   firebase.auth().onAuthStateChanged(function(user) {
@@ -58,7 +58,7 @@ else {
                 <li><RouterLink to="add">Add Friends</RouterLink></li>
                 <li><RouterLink to="conversation">Feed</RouterLink></li>
                 <li><RouterLink to="profile">Profile</RouterLink></li>
-                <button @click="signOut"><RouterLink to="/">Log Out</RouterLink></button>
+                <li><RouterLink @click="signOut" to="/">Log Out</RouterLink></li>
             </ul>
         </div>
     </nav>

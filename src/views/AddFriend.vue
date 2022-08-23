@@ -6,7 +6,7 @@
     import NavBar from '../components/NavBar.vue';
     import { db } from '@/firebase'
     import { ref, onMounted } from 'vue'
-    import { collection, query, where, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore'
+    import { collection, query, where, doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore'
     import { ref as dbRef, child, get, getDatabase } from 'firebase/database'
     import { getAuth, onAuthStateChanged } from "firebase/auth"
 
@@ -18,7 +18,8 @@
         data() {
             return {
                 email: '',
-                emailError: '',
+                properlyFormattedEmail: '',
+                canFriend: false,
                 submitted: false
             }
         },
@@ -32,46 +33,40 @@
         methods: {
             async handleSubmit() { // check data and submit to database
                 this.email = this.$refs.emailField.value;
-                const isValid = String(this.email)
+                this.properlyFormattedEmail = String(this.email)
                     .toLowerCase()
                     .match(
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     );
-                this.emailError = !isValid;
-                if (!this.emailError) {
-                    await this.checkAddedUser(this.email);
+                if (this.properlyFormattedEmail) {
+                    this.canFriend = await this.checkIfUserCanBeFriended(this.email);
                 }
 
                 this.submitted = true;
             },
-            async checkAddedUser(email) {
-                // check if user exists
-                const addeeRef = doc(db, "users", email);
+            async checkIfUserCanBeFriended(addeeEmail) {
+                // addee: friend being added
+                // adder: user currently logged in
+
+                // 1. specify doc of addee
+                const addeeRef = doc(db, "users", addeeEmail);
                 const addeeSnap = await getDoc(addeeRef);
 
+                // 2. if addee exists, make a "friends" doc featuring both
                 if (addeeSnap.exists()) {
-                    console.log("Document data:", addeeSnap.data());
-
                     const auth = getAuth();
-                    const currentUserEmail = auth.currentUser.email;
-                    const adderRef = doc(db, "users", currentUserEmail);
-                    const adderSnap = await getDoc(adderRef);
-                    console.log("Document data:", adderSnap.data());
-                    // check if users already friends
-                    // coming soon
-                    
-                    // adds friend (if already friends, nothing)
-                    await updateDoc(addeeRef, {
-                        friendsList: arrayUnion(currentUserEmail)
-                    });
-                    await updateDoc(adderRef, {
-                        friendsList: arrayUnion(email)
-                    });
+                    const adderEmail = auth.currentUser.email;
 
-                    console.log("successfully added each other");
+                    await setDoc(doc(db, "friends", String(adderEmail + addeeEmail)), {
+                        user1: addeeEmail,
+                        user2: adderEmail,
+                        status: "added"
+                    });
+                    return true;
                 } else {
                     // doc.data() will be undefined in this case
-                    console.log("No such document!");
+                    console.log("Addee not found!");
+                    return false;
                 }
                 
             },
@@ -89,18 +84,16 @@
             <li>Enter your friend's email address.</li>
             <li>They will be added as a friend if they have an account.</li>
         </ol>
-        <div v-if="submitted"> <!-- doesn't work -->
-            <p v-if="!emailError">{{ email }} has been added as a friend!</p>
-            <p v-else-if="emailError && email.length > 0">{{ email }} could not be added as a friend</p>
+        <div v-if="submitted">
+            <p v-if="properlyFormattedEmail && canFriend">{{ email }} has been added as a friend!</p>
+            <p v-else-if="properlyFormattedEmail && !canFriend">{{ email }} cannot be added as a friend</p>
+            <p v-else-if="!properlyFormattedEmail && email.length > 0">{{ email }} is an invalid email</p>
             <p v-else>Please enter an email</p>
         </div>
     </div>
 </template>
 
 <style scoped>
-[v-cloak] {
-    display: none;
-}
 #wrapper {
     margin: 5vh 20vh;
     display: flex;
@@ -108,10 +101,15 @@
     align-items: center;
 }
 #email-box {
-    margin: 5vh 0;
+    margin: 4vh 0;
+    padding: 10px 20px;
+    border-radius: 35px;
+    width: 50%;
+    font-size: 1.1em;
 }
 #instructions {
     color: rgb(183, 183, 183);
-    line-height: 2em;
+    line-height: 1.2em;
+    padding: 2em 0 0 0;
 }
 </style>

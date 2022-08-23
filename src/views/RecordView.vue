@@ -103,35 +103,34 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
 <template>
     <NavBar />
-    <div class="prompt-row">
-        <p class="prompt">Prompt: Count to 10 in random order</p>
-    </div>
-    <div class="record-row">
-        <RouterLink :to="{ name:'home' }">
-            <RaisedButton msg="Record now"></RaisedButton>
-        </RouterLink>
-    </div>
-
-    <main>        
-        <button id="btnStart">START RECORDING</button><br/>
+    <main>
+        <div class="prompt-row">
+            <p class="prompt">Prompt: Count to 10 in random order</p>
+        </div>
+        <div class="record-row">
+            <RouterLink :to="{ name:'home' }">
+                <RaisedButton msg="Record now"></RaisedButton>
+            </RouterLink>
+        </div>
         <div id="countdown"></div>
         <div id="attempts"></div>
-        <button id="btnStop">STOP RECORDING</button><br/>
         <audio id="aud2" controls></audio>
+        <div id="btn-row">
+            <button id="btnStart">START RECORDING</button><br/>
+            <button id="btnStop">STOP RECORDING</button><br/>
+        </div>
     </main>
 
 </template>
 
 <style scoped>
-.prompt-row {
-    padding: 0;
+main {
     display: flex;
-    justify-content: center;
-    width: 100%;
+    flex-direction: column;
+    align-items: center;
 }
-.record-row {
+#btn-row {
     display: flex;
     justify-content: center;
-    width: 100%;
 }
 </style>
