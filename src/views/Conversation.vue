@@ -118,7 +118,6 @@ function shufflePairs() {
     })
 }
 
-
 function shuffle() {
     allUsers.forEach(user => {
         // Indicate that the current friend has been paired with the user
