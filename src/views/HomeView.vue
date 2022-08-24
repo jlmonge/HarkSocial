@@ -20,7 +20,6 @@ import { RouterLink } from 'vue-router'
             </RouterLink>
         </div>
     </div>
-    <!--<RouterLink to="profile"><RaisedButton msg="profile"></RaisedButton></RouterLink>-->
 </template>
 
 <style scoped>

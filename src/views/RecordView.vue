@@ -4,8 +4,9 @@ import NavBar from '../components/NavBar.vue'
 import { RouterLink } from 'vue-router'
 import { uploadBytes, getStorage, ref } from "firebase/storage";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-  import firebase from 'firebase/compat';
+import firebase from 'firebase/compat';
 import Prompt from '../components/Prompt.vue'
+
 
 const today = new Date();
 const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`;

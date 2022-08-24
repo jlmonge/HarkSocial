@@ -76,6 +76,7 @@ main.isLoggedIn = true;
   dateRegistered: today,
   friendsList: [],
   userPairs: [],
+  isAdmin: false,
 });
  }
          alert("Succesfully registered! Please log-in above."); // redirect to the feed

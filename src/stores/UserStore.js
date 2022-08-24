@@ -6,6 +6,7 @@ export const userStore = defineStore("main",{
     isLoggedIn: false,
     email: undefined,
     uuid: undefined,
+    isAdmin: false,
     currentPair: "No current pair",
   }),
 
@@ -25,6 +26,7 @@ export const userStore = defineStore("main",{
     },
     printMessage(){
       // console.log("Pinia test")
+      console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + ' |  isAdmin:'  + this.isAdmin  + '\n');
       console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + 'Current Pair: '+this.currentPair+'\n');
     },
 

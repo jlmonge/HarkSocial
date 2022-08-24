@@ -3,10 +3,11 @@ import AudioVisualizer from './AudioVisualizer.vue';
 //import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
 import FriendAudio from './FriendAudio.vue'
+import firebase from 'firebase/compat';
+const user = firebase.auth().currentUser.email
 import Prompt from './Prompt.vue'
 import { userStore } from '../stores/UserStore';
 const main = userStore();
-
 </script>
 
 <template>
