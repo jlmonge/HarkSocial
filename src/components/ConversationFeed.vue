@@ -3,9 +3,11 @@ import AudioVisualizer from './AudioVisualizer.vue';
 //import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
 import FriendAudio from './FriendAudio.vue'
+import Prompt from './Prompt.vue'
 </script>
 
 <template>
+    <Prompt></Prompt>
     <div id="conversation-feed">
         <div id="user1">
             <p>User 1</p>

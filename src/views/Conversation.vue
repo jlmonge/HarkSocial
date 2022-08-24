@@ -12,7 +12,6 @@
     <NavBar></NavBar>
     <div class="conversation">
         <button @click="main.printMessage()">Print</button>
-        <Prompt></Prompt>
         <ConversationFeed></ConversationFeed>
     </div>
 </template>
