@@ -3,23 +3,25 @@ import AudioVisualizer from './AudioVisualizer.vue';
 //import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
 import FriendAudio from './FriendAudio.vue'
-import Username from './Username.vue'
 import firebase from 'firebase/compat';
-
 const user = firebase.auth().currentUser.email
+import Prompt from './Prompt.vue'
+import { userStore } from '../stores/UserStore';
+const main = userStore();
 </script>
 
 <template>
+    <Prompt></Prompt>
     <div id="conversation-feed">
         <div id="user1">
-            <Username username=user ></Username>
+            <p>{{main.email}}</p>
             <AudioVisualizer></AudioVisualizer>
         </div>
         <RouterLink to="record">
             <RaisedButton msg="Record Now"></RaisedButton>
         </RouterLink>
         <div id="user2">
-            <p>User 2</p>
+            <p>{{main.currentPair}}</p>
             <FriendAudio></FriendAudio>
         </div>
     </div>

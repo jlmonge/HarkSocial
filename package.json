@@ -11,7 +11,9 @@
     "test:e2e:ci": "start-server-and-test preview http://localhost:4173/ 'cypress run --e2e'"
   },
   "dependencies": {
+    "events": "^3.3.0",
     "firebase": "^9.9.2",
+    "firebase-admin": "^11.0.1",
     "firebase-tools": "^11.4.2",
     "moment": "^2.29.4",
     "pinia": "^2.0.16",

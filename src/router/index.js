@@ -4,6 +4,7 @@ import Conversation from '../views/Conversation.vue'
 import Profile from '../views/Profile.vue'
 import SignIn from '../views/SignIn.vue'
 import RecordView from '../views/RecordView.vue'
+import Friends from '../views/Friends.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,8 +33,13 @@ const router = createRouter({
       path: '/record',
       name: 'record',
       component: RecordView,
+    },
+    {
+      path: '/friends',
+      name: 'friends',
+      component: Friends,
     }
   ]
 });
 
-export default router
+export default router;

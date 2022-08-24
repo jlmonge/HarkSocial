@@ -28,9 +28,8 @@ import { RouterLink } from 'vue-router'
     padding: 0 10%;
     height: 100vh;
     font-family: 'Barlow';
-    background-image: url("../../src/assets/color_visualizer.gif");
-    background-repeat: repeat;
-    background-position: 0% 100%;
+    background-image: url("../../src/assets/hark-bg.gif");
+    background-position: center;
 }
 
 @keyframes appear {

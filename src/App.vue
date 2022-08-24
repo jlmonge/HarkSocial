@@ -1,8 +1,9 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
+<script>
+import 'firebase/compat/auth'
 import firebase from 'firebase/compat/app'
-import { getAuth , onAuthStateChanged} from '@firebase/auth'
+import { RouterLink, RouterView } from 'vue-router'
 import { ref, watchEffect } from 'vue'
+
 import 'firebase/compat/auth'
 const isLoggedIn = ref(true)
 // runs after firebase is initialized
@@ -17,6 +18,7 @@ const signOut = () => {
   firebase.auth().signOut()
   router.push('/')
 }
+
 </script>
 
 <template>

@@ -19,7 +19,7 @@ if (main.isLoggedIn === true){
 else {
     isLoggedIn = false;
     console.log('User not logged in, returning to home page.')
-        router.push('/')
+    router.push('/')
 }
   // runs after firebase is initialized
 //   firebase.auth().onAuthStateChanged(function(user) {
@@ -47,7 +47,7 @@ else {
 <template>
     <nav>
         <div class="nav-logo">
-            <RouterLink to="/">HARK</RouterLink>
+            <RouterLink to="">Hark</RouterLink>
         </div>
         <div class="nav-search">
             <!-- <input type="text" placeholder="Search Friends..."> -->
@@ -55,9 +55,10 @@ else {
         </div>
         <div class="nav-links">
             <ul>
+                <li><RouterLink to="friends">Friends</RouterLink></li>
                 <li><RouterLink to="conversation">Feed</RouterLink></li>
                 <li><RouterLink to="profile">Profile</RouterLink></li>
-                <button @click="signOut"><RouterLink to="/">Log Out</RouterLink></button>
+                <li><RouterLink @click="signOut" to="/">Log Out</RouterLink></li>
             </ul>
         </div>
     </nav>
@@ -74,7 +75,7 @@ nav {
     background-color: black;
     margin: 0;
     padding: 0;
-    height: 70px;
+    height: 12.5vh;
     font-size: 1.1em;
     font-family: 'Barlow';
 }

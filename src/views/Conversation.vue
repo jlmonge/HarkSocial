@@ -27,16 +27,19 @@ getDocs(userRef)
         console.log(err.message)
     })
 
+
 getDocs(pairsRef)
     .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
             allPairs.push({...doc.data(), id: doc.id})
         })
+
         console.log(allPairs)
     })
     .catch(err => {
         console.log(err.message)
     })
+
 
 async function shuckle() {
     try {
@@ -366,8 +369,8 @@ async function shufflePairs() {
     <NavBar></NavBar>
     <div class="conversation">
         <button @click="shuckle()">Shuffle Pairs</button>
+        <button @click="checkPair(main.email)">get friends</button>
         <button @click="main.printMessage()">Print</button>
-        <Prompt></Prompt>
         <ConversationFeed></ConversationFeed>
     </div>
 </template>
