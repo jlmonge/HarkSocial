@@ -6,6 +6,7 @@ export const userStore = defineStore("main",{
     isLoggedIn: false,
     email: undefined,
     uuid: undefined,
+    currentPair: "No current pair",
   }),
 
   getters: {
@@ -19,11 +20,12 @@ export const userStore = defineStore("main",{
       this.isLoggedIn = false;
       this.email = undefined;
       this.userID = undefined;
+      this.currentPair = "No current pair";
       console.log(this.isLoggedIn + ','+this.email+','+this.userID +'\nLog Out Pinia success');
     },
     printMessage(){
       // console.log("Pinia test")
-      console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + '\n');
+      console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + 'Current Pair: '+this.currentPair+'\n');
     },
 
     storeUser(isLog,mail,ID){
