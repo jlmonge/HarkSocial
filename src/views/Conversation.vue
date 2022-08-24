@@ -7,7 +7,7 @@ import { userStore } from '../stores/UserStore.js'
 //import { forEach } from 'cypress/types/lodash';
 const main = userStore();
 
-import { getFirestore, collection, getDocs, query, where, snapshotEqual } from '@firebase/firestore'
+import { getFirestore, collection, getDocs, query, where, snapshotEqual} from '@firebase/firestore'
 // import {
 //   collection,
 //   doc,
@@ -18,16 +18,16 @@ import { getFirestore, collection, getDocs, query, where, snapshotEqual } from '
 //   where,
 //   deleteDoc,
 // } from 'firebase/firestore'
-const db = getFirestore()
+const db = firebase.firestore()
 const userRef = collection(db, 'users')
-const friendsRef = collection(db, 'friends')
+const friendsRef = collection(db,'friends')
 const pairsRef = collection(db, 'pairs')
-
+let friendsCollection = query(collection(db,'friends'))
 const allUsers = []
 const allFriends = []
 const allPairs = []
 var friendsList = []
-
+var userList = []
 getDocs(userRef)
     .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
@@ -38,13 +38,16 @@ getDocs(userRef)
     .catch(err => {
         console.log(err.message)
     })
+    for (user in allUsers){
+        userList.push(user.email)
+    }
 
 getDocs(friendsRef)
     .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
             allFriends.push({...doc.data(), id: doc.id})
         })
-        console.log(allUsers)
+        // console.log(allUsers)
     })
     .catch(err => {
         console.log(err.message)
@@ -55,12 +58,54 @@ getDocs(pairsRef)
         snapshot.docs.forEach((doc) => {
             allPairs.push({...doc.data(), id: doc.id})
         })
-        console.log(allUsers)
+        // console.log(allUsers)
     })
     .catch(err => {
         console.log(err.message)
     })
 
+
+// console.log(allFriends);
+console.log(userList)
+
+
+async function getFriendsWithUser(currentUser) {
+    console.log("running getfriends")
+    console.log(currentUser)
+    currentUser = String(currentUser);
+//   const isUser1 = where(friendsRef, 'user2', '==', currentUser).get()
+// const isUser2 = where(friendsRef, 'user1', '==', currentUser).get()
+  let isUser1 = query(friendsCollection,where('user1', '==',currentUser),where('isPair','==','true'));
+  let isUser2 = query(friendsCollection,where('user2', '==', currentUser));
+
+//   let isUser2 = friendsRef.where('user2', '==', currentUser).get();
+
+console.log('query successful')
+//   const isUser2 = friendsRef.where('user2', '==', currentUser).get();
+console.log('attempt snapshot')
+const isUser1QuerySnapshot  = await getDocs(isUser1);
+const isUser2QuerySnapshot  = await getDocs(isUser2);
+
+console.log('snapshot')
+
+const isUser1Array = [];
+const isUser2Array = [];
+isUser1QuerySnapshot.forEach((responseItem)=>{
+isUser1Array.push(responseItem.id);
+})
+isUser2QuerySnapshot.forEach((responseItem)=>{
+isUser2Array.push(responseItem.id);
+})
+//   const isUser1Array = isUser1QuerySnapshot.docs;
+//   const isUser2Array = isUser2QuerySnapshot.docs;
+const doneArray = [].concat(isUser1Array,isUser2Array);
+console.log(doneArray)
+  //Note that we don't need to de-duplicate in this case
+  return doneArray;
+}
+// function checkPair(docID){
+
+// }
 function shufflePairs() { 
     allUsers.forEach(user => {
         // Reset currentPair and friendsList for each user iteration
@@ -102,17 +147,18 @@ function shufflePairs() {
             for(let i = 0; i < allPairs.length; i++) {
                 if (user.email === allPairs[i].pair1 && allPairs[i].pair2 === potentialPair) {
                     nonexisting = false
-                    continue
+                    break
                 }
                 if (user.email === allPairs[i].pair2 && allPairs[i].pair1 === potentialPair) {
                     nonexisting = false
-                    continue
+                    break
                 }
             }
             // if (nonexisting) {
             //      addDoc when finished
             // }
             console.log(user.email + '\'s new pair is: ' + potentialPair)
+
             paired = true
         }
     })
@@ -162,6 +208,7 @@ function shuffle() {
     <NavBar></NavBar>
     <div class="conversation">
         <button @click="shufflePairs()">Shuffle Pairs</button>
+        <button @click="getFriendsWithUser(main.email)">get friends</button>
         <button @click="main.printMessage()">Print</button>
         <Prompt></Prompt>
         <ConversationFeed></ConversationFeed>
