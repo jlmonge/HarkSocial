@@ -3,6 +3,7 @@ import { db } from '@/firebase'
 import {doc,getDoc,setDoc,query,where,snapshotEqual,getDocs,collection,addDoc} from 'firebase/firestore'
  
 export default {
+  name:"App",
   data() {
 
    return {
@@ -12,6 +13,10 @@ export default {
      promptID: null,
      savedPrompt:null
      };
+ },
+
+ beforeMount(){
+  this.displayPrompt();
  },
 
  methods: {
@@ -24,14 +29,21 @@ export default {
          let month = date.getMonth() + 1;
          let year = date.getFullYear();
          let currentDate = `${month}-${day}-${year}`;
+
+         const pRef = doc(db,'prompts',currentDate);
+
+         await setDoc(pRef,{
+          date:currentDate,
+          prompt:this.prompt
+         })
  
-         const dRef = await addDoc(
+         /*const dRef = await addDoc(
            collection(db, 'prompts'),
            {
              date: currentDate,
              prompt: this.prompt,
            },
-         );
+         );*/
        } catch(err) {
          console.error(err);
        }
@@ -50,81 +62,57 @@ export default {
 
     let q = query(pRef, where('date', '==', currentDate));
 
-    const allPrompts = []
-
       getDocs(q).then((snapshot) => {
         snapshot.docs.forEach((doc) => {
-            //allPrompts.push({...doc.data().prompt})
             var data = doc.data();
             this.savedPrompt = data.prompt;
-        })
+            })
         });
-
-
-
-    /*const List = await getDocs(q);
-
-    List.forEach((e)=>{
-      console.log(e.data())
-    })*/
-
    }
-   /*async readPrompt() {
-     if (this.promptID != null) {
-       try {
-         const pRef = doc(db, 'prompts', this.promptID);
- 
-         const promptList = await getDoc(pRef);
- 
-         this.readPrompts = {
-           id: promptList.id, ...promptList.data(),
-         }
-       } catch(err) {
-         console.error(err);
-       }
-     }
-   }*/
  }
 }
 </script>
  
 <template>
+<div id="App"></div>
  <div id="bars">
   
    <input type="text" v-model="prompt"/>
    <br>
-   <button @click="createPrompt()">Create Prompt</button>
+   <button @click="createPrompt()" id="promptButton">Create Prompt</button>
    <br>
+   <p>{{prompt}}</p>
+   <h1>{{savedPrompt}}</h1>
 
-   <button @click = "displayPrompt()">See Today's Prompt</button>
-
-   <!--<template v-if="savedPrompt">
-     <p>{{ savedPrompt.prompt || 'Check the Date' }}</p>
-   </template>-->
-
-   <h3>{{savedPrompt}}</h3>
- 
- <!--
-   <h3>Enter Today's Date for Today's Prompt</h3>
- 
-   <input type="text" v-model="promptID" placeholder="Eg: 1-23-2022" />
- 
    <br>
- 
-   <button @click="readPrompt()">Look At Prompt</button>
- 
-   <template v-if="readPrompts">
-     <p>{{ readPrompts.prompt || 'Check the Date' }}</p>
-   </template>
-   -->
  
  </div>
 </template>
 
 <style>
 
+#promptButton{
+  cursor: pointer;
+  background-color: black;
+  font-size: 15px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: white;
+  border-radius: 15px;
+  border-style: solid;
+  padding:5px 5px 5px 5px
+}
+
+#promptButton:hover{
+  background-color: gray;
+  color: white;
+}
+
 #bars{
     text-align: center;
+}
+
+#todayPrompt{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 </style>
