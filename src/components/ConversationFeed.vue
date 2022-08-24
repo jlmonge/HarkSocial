@@ -3,19 +3,21 @@ import AudioVisualizer from './AudioVisualizer.vue';
 //import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
 import FriendAudio from './FriendAudio.vue'
+import { userStore } from '../stores/UserStore';
+const main = userStore();
 </script>
 
 <template>
     <div id="conversation-feed">
         <div id="user1">
-            <p>User 1</p>
+            <p>{{main.email}}</p>
             <AudioVisualizer></AudioVisualizer>
         </div>
         <RouterLink to="record">
             <RaisedButton msg="Record Now"></RaisedButton>
         </RouterLink>
         <div id="user2">
-            <p>User 2</p>
+            <p>{{main.currentPair}}</p>
             <FriendAudio></FriendAudio>
         </div>
     </div>
