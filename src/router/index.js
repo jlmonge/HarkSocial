@@ -4,7 +4,7 @@ import Conversation from '../views/Conversation.vue'
 import Profile from '../views/Profile.vue'
 import SignIn from '../views/SignIn.vue'
 import RecordView from '../views/RecordView.vue'
-import AddFriend from '../views/AddFriend.vue'
+import Friends from '../views/Friends.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,9 +35,9 @@ const router = createRouter({
       component: RecordView,
     },
     {
-      path: '/add',
-      name: 'add',
-      component: AddFriend,
+      path: '/friends',
+      name: 'friends',
+      component: Friends,
     }
   ]
 });

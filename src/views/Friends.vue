@@ -6,7 +6,7 @@
     import NavBar from '../components/NavBar.vue';
     import { db } from '@/firebase'
     import { ref, onMounted } from 'vue'
-    import { collection, query, where, doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore'
+    import { collection, query, where, doc, getDoc, getDocs, setDoc, updateDoc, arrayUnion } from 'firebase/firestore'
     import { ref as dbRef, child, get, getDatabase } from 'firebase/database'
     import { getAuth, onAuthStateChanged } from "firebase/auth"
 
@@ -20,15 +20,26 @@
                 email: '',
                 properlyFormattedEmail: '',
                 canFriend: false,
-                submitted: false
+                submitted: false,
+                friends: []
             }
         },
         async created() { 
-            /*const querySnapshot = await getDocs(collection(db, "users"));
-            querySnapshot.forEach((doc) => {
+            const q1 = query(collection(db, "friends"), where('user1', '==', getAuth().currentUser.email));
+            const q1Snapshot = await getDocs(q1);
+            q1Snapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
-                console.log(doc.name, " => ", doc.data());
-            });*/
+                this.friends.push(doc.data().user2)
+                //console.log(doc.id, " => ", doc.data().user2);
+            });
+            const q2 = query(collection(db, "friends"), where('user2', '==', getAuth().currentUser.email));
+            const q2Snapshot = await getDocs(q2);
+            q2Snapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                this.friends.push(doc.data().user1)
+            })
+            console.log(this.friends)
+            
         },
         methods: {
             async handleSubmit() { // check data and submit to database
@@ -41,7 +52,6 @@
                 if (this.properlyFormattedEmail) {
                     this.canFriend = await this.checkIfUserCanBeFriended(this.email);
                 }
-
                 this.submitted = true;
             },
             async checkIfUserCanBeFriended(addeeEmail) {
@@ -62,6 +72,7 @@
                         user2: adderEmail,
                         status: "added"
                     });
+                    console.log(addeeEmail, "was added");
                     return true;
                 } else {
                     // doc.data() will be undefined in this case
@@ -77,18 +88,26 @@
 <template>
     <NavBar></NavBar>
     <div id="wrapper">
-        <h1>Add a friend!</h1>
-        <input type="text" placeholder="Email" ref="emailField" id="email-box" required><br/>
-        <RaisedButton @click="handleSubmit" msg="Add friend"></RaisedButton>
-        <ol id="instructions">
-            <li>Enter your friend's email address.</li>
-            <li>They will be added as a friend if they have an account.</li>
-        </ol>
-        <div v-if="submitted">
-            <p v-if="properlyFormattedEmail && canFriend">{{ email }} has been added as a friend!</p>
-            <p v-else-if="properlyFormattedEmail && !canFriend">{{ email }} cannot be added as a friend</p>
-            <p v-else-if="!properlyFormattedEmail && email.length > 0">{{ email }} is an invalid email</p>
-            <p v-else>Please enter an email</p>
+        <div id="add-friend">
+            <h1>Add a friend!</h1>
+            <input type="text" placeholder="Email" ref="emailField" id="email-box" required><br/>
+            <RaisedButton @click="handleSubmit" msg="Add friend"></RaisedButton>
+            <ol id="instructions">
+                <li>Enter your friend's email address.</li>
+                <li>They will be added as a friend if they have an account.</li>
+            </ol>
+            <div v-if="submitted">
+                <p v-if="properlyFormattedEmail && canFriend">{{ email }} has been added as a friend!</p>
+                <p v-else-if="properlyFormattedEmail && !canFriend">{{ email }} cannot be added as a friend</p>
+                <p v-else-if="!properlyFormattedEmail && email.length > 0">{{ email }} is an invalid email</p>
+                <p v-else>Please enter an email</p>
+            </div>
+        </div>
+        <div id="friend-list">
+            <h2>Your Friends</h2>
+            <span v-for="friend in friends" class="friend">
+                {{ friend }}
+            </span>
         </div>
     </div>
 </template>
@@ -97,8 +116,32 @@
 #wrapper {
     margin: 5vh 20vh;
     display: flex;
+    flex-direction: row;
+    /*align-items: center;*/
+}
+#add-friend {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 3 1 0;
+}
+#friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    flex: 1 1 0
+}
+.friend {
+    width: 100%;
+}
+.friend:first-of-type {
+    padding-top: 10px;
+    margin-bottom: 10px
+}
+.friend:not(:first-of-type) {
+    border-top: 1px solid;
+    padding-top: 10px;
+    margin-bottom: 10px
 }
 #email-box {
     margin: 4vh 0;

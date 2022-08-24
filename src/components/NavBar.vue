@@ -47,7 +47,7 @@ else {
 <template>
     <nav>
         <div class="nav-logo">
-            <RouterLink to="/">Hark</RouterLink>
+            <RouterLink to="">Hark</RouterLink>
         </div>
         <div class="nav-search">
             <!-- <input type="text" placeholder="Search Friends..."> -->
@@ -55,7 +55,7 @@ else {
         </div>
         <div class="nav-links">
             <ul>
-                <li><RouterLink to="add">Add Friends</RouterLink></li>
+                <li><RouterLink to="friends">Friends</RouterLink></li>
                 <li><RouterLink to="conversation">Feed</RouterLink></li>
                 <li><RouterLink to="profile">Profile</RouterLink></li>
                 <li><RouterLink @click="signOut" to="/">Log Out</RouterLink></li>
