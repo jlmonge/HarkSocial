@@ -3,34 +3,41 @@
     import { getDownloadURL, getStorage, ref } from "firebase/storage";
     //import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
     import firebase from 'firebase/compat';
+    import { userStore } from "../stores/UserStore";
     // Create a reference with an initial file path and name
     //function getStorageAudio() {
+        setTimeout(2000);
+        const main = userStore();
         const storage = getStorage();
         const storageRef = ref(storage);
-
+        const friendEmail = main.currentPair;
         // const today = new Date();
         // const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`
         // const user = firebase.auth().currentUser.uid
 
-        const friendPath = 'VhDlHVyyx9f4bXlZdyNSyuxTG6k12022815'
-
-        const friendAudioRef = ref(storageRef, `${ friendPath }`)
-
+        const friendPath = String(main.currentPair)
+        const userPath = String(main.email)
+        const friendAudioRef = ref(storageRef, `${ friendPath }` + `${userPath}`)
+        let didWork = false;
         getDownloadURL(friendAudioRef)
             .then((url) => {
-                const audioControls = document.getElementById('vis2')
+                didWork = true;
+                const audioControls = document.getElementById('vis3')
                 audioControls.setAttribute('src', url)
+                console.log("got pair audio")
             })
             .catch((error) => {
                 console.log(error)
+                didWork = false;
             });
 
 </script>
 
 <template>
-    <audio id="vis2" src="" controls>
+    <audio id="vis3" src="" controls>
         <source type="audio/mpeg">
     </audio>
+
 </template>
 
 

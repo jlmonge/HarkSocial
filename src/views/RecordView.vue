@@ -5,7 +5,8 @@ import { RouterLink } from 'vue-router'
 import { uploadBytes, getStorage, ref } from "firebase/storage";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
   import firebase from 'firebase/compat';
-
+  import { userStore } from '../stores/UserStore';
+const main = userStore();
 const today = new Date();
 const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`;
 
@@ -14,7 +15,7 @@ console.log(user);
 
 const storage = getStorage();
 const storageRef = ref(storage);
-const userAudio = ref(storageRef, `${ user + date }`)
+const userAudio = ref(storageRef, `${ main.email + main.currentPair}`)
 
 let constraintObj = { 
         audio: true, 
@@ -113,6 +114,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     </div>
 
     <main>        
+        <h3>You are talking with {{main.currentPair}}!</h3>
         <button id="btnStart">START RECORDING</button><br/>
         <div id="countdown"></div>
         <div id="attempts"></div>
