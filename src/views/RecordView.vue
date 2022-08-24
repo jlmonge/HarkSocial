@@ -5,6 +5,7 @@ import { RouterLink } from 'vue-router'
 import { uploadBytes, getStorage, ref } from "firebase/storage";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
   import firebase from 'firebase/compat';
+import Prompt from '../components/Prompt.vue'
 
 const today = new Date();
 const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`;
@@ -103,15 +104,15 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
 <template>
     <NavBar />
-    <main>
-        <div class="prompt-row">
-            <p class="prompt">Prompt: Count to 10 in random order</p>
-        </div>
-        <div class="record-row">
-            <RouterLink :to="{ name:'home' }">
-                <RaisedButton msg="Record now"></RaisedButton>
-            </RouterLink>
-        </div>
+    <Prompt></Prompt>
+    <div class="record-row">
+        <RouterLink :to="{ name:'home' }">
+            <RaisedButton msg="Record now"></RaisedButton>
+        </RouterLink>
+    </div>
+
+    <main>        
+        <button id="btnStart">START RECORDING</button><br/>
         <div id="countdown"></div>
         <div id="attempts"></div>
         <audio id="aud2" controls></audio>
