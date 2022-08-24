@@ -39,7 +39,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
         counter ++;
 
-        document.getElementById("attempts").innerHTML = "Attempts:" + counter;
+        document.getElementById("attempts").innerHTML = "Attempts: " + counter;
 
         mediaRecorder.start();
         console.log(mediaRecorder.state);
@@ -60,7 +60,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
            //counts if event is clicked twice, if so the button is disabled, otherwise the user can still record until attempts are reached
         if(counter >= 2){
            start.setAttribute('disabled',true);
-           document.getElementById("attempts").innerHTML = "Out of Attempts";
+           document.getElementById("attempts").innerHTML = "Out of attempts";
 
            //sets time to how long the user isn't able to record
            setTimeout(function(){
@@ -104,21 +104,15 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
 <template>
     <NavBar />
-    <Prompt></Prompt>
-    <div class="record-row">
-        <RouterLink :to="{ name:'home' }">
-            <RaisedButton msg="Record now"></RaisedButton>
-        </RouterLink>
-    </div>
 
-    <main>        
-        <button id="btnStart">START RECORDING</button><br/>
+    <main>   
+        <Prompt></Prompt>
         <div id="countdown"></div>
         <div id="attempts"></div>
         <audio id="aud2" controls></audio>
         <div id="btn-row">
-            <button id="btnStart">START RECORDING</button><br/>
-            <button id="btnStop">STOP RECORDING</button><br/>
+            <RaisedButton msg="Start Recording" id="btnStart"></RaisedButton><br/>
+            <RaisedButton msg="Stop Recording" id="btnStop"></RaisedButton><br/>
         </div>
     </main>
 
@@ -126,12 +120,21 @@ navigator.mediaDevices.getUserMedia(constraintObj)
 
 <style scoped>
 main {
+    font-family: Barlow;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 #btn-row {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+#aud2 {
+    margin: 2vw 0 3vw 0;
+}
+#btn-row > * {
+    margin: 0 1vw;
 }
 </style>

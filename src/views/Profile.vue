@@ -5,26 +5,31 @@ import NavBar from '../components/NavBar.vue';
 
 <template>
     <NavBar></NavBar>
-    <div id="user-info">
-        <img src="../assets/placeholder.png" />
-        <h2>User Name</h2>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur 
-           adipiscing elit, sed do eiusmod tempor incididunt 
-           ut labore et dolore magna aliqua.
-        </p>
-    </div>
-    <div id="friends-container">
-        <h2>My Friends</h2>
-        <div id="friends-cards">
-            <FriendCard></FriendCard>
-            <FriendCard></FriendCard>
-            <FriendCard></FriendCard>
+    <main>
+        <div id="user-info">
+            <img src="../assets/placeholder.png" />
+            <h2>User Name</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur 
+            adipiscing elit, sed do eiusmod tempor incididunt 
+            ut labore et dolore magna aliqua.
+            </p>
         </div>
-    </div>
+        <div id="friends-container">
+            <h2>My Friends</h2>
+            <div id="friends-cards">
+                <FriendCard></FriendCard>
+                <FriendCard></FriendCard>
+                <FriendCard></FriendCard>
+            </div>
+        </div>
+    </main>
 </template>
 
 <style scoped>
+main {
+    margin: 2vw 10vw;
+}
 #user-info {
     display: flex;
     flex-direction: column;
