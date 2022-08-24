@@ -289,7 +289,6 @@ checkPair(main.email);
         <button @click="shufflePairs()">Shuffle Pairs</button>
         <button @click="checkPair(main.email)">get friends</button>
         <button @click="main.printMessage()">Print</button>
-        <Prompt></Prompt>
         <ConversationFeed></ConversationFeed>
     </div>
 </template>

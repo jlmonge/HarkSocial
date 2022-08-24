@@ -3,11 +3,14 @@ import AudioVisualizer from './AudioVisualizer.vue';
 //import RecordButton from './RecordButton.vue';
 import RaisedButton from './RaisedButton.vue';
 import FriendAudio from './FriendAudio.vue'
+import Prompt from './Prompt.vue'
 import { userStore } from '../stores/UserStore';
 const main = userStore();
+
 </script>
 
 <template>
+    <Prompt></Prompt>
     <div id="conversation-feed">
         <div id="user1">
             <p>{{main.email}}</p>
