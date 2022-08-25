@@ -8,6 +8,7 @@ export const userStore = defineStore("main",{
     uuid: undefined,
     isAdmin: false,
     currentPair: "No current pair",
+    counter: 0,
   }),
 
   getters: {
@@ -27,7 +28,7 @@ export const userStore = defineStore("main",{
     printMessage(){
       // console.log("Pinia test")
       console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + ' |  isAdmin:'  + this.isAdmin  + '\n');
-      console.log('Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + 'Current Pair: '+this.currentPair+'\n');
+      console.log("counter"+this.counter+'Login:'+ this.isLoggedIn + '  |  email: ' + this.email+ '  |  uid: ' + this.userID + 'Current Pair: '+this.currentPair+'\n');
     },
 
     storeUser(isLog,mail,ID){

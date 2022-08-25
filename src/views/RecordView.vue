@@ -6,17 +6,17 @@ import { uploadBytes, getStorage, ref } from "firebase/storage";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import firebase from 'firebase/compat';
 import Prompt from '../components/Prompt.vue'
-
-
+import { userStore } from '../stores/UserStore';
+const main = userStore();
 const today = new Date();
 const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`;
-
+const pathName = main.email + main.currentPair;
 const user = firebase.auth().currentUser.uid;
 console.log(user);
 
 const storage = getStorage();
 const storageRef = ref(storage);
-const userAudio = ref(storageRef, `${ user + date }`)
+const userAudio = ref(storageRef, `${ pathName }`)
 
 let constraintObj = { 
         audio: true, 
@@ -90,7 +90,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     mediaRecorder.onstop = (ev)=>{
         let blob = new Blob(chunks, { 'type' : 'audio/mpeg;' });
         uploadBytes(userAudio, blob).then((snapshot) => {
-            console.log('blob uploaded')
+            console.log('blob uploaded as:' + pathName)
         })
         chunks = [];
         let audioURL = window.URL.createObjectURL(blob);

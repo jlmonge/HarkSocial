@@ -10,7 +10,7 @@ import { getFirestore, collection, getDocs, updateDoc, query, where } from '@fir
 const db = getFirestore()
 const userRef = collection(db, 'users')
 const pairsRef = collection(db, 'pairs')
-const pairCollection = query(collection(db, 'pairs'))
+const pairsCollection = query(collection(db, 'pairs'))
 const friendsCollection = query(collection(db, 'friends'))
 const allUsers = []
 const allPairs = []
@@ -183,8 +183,8 @@ async function checkPair(currentUser) {
     currentUser = String(currentUser);
     let isUser1QuerySnapshot;
     let isUser2QuerySnapshot;
-  let isUser1 = query(pairCollection,where('pair1', '==',currentUser), where('isPair','==',true));
-  let isUser2 = query(pairCollection,where('pair2', '==', currentUser), where('isPair','==',true));
+  let isUser1 = query(pairsCollection,where('pair1', '==',currentUser), where('isPair','==',true));
+  let isUser2 = query(pairsCollection,where('pair2', '==', currentUser), where('isPair','==',true));
 
 
 console.log('query successful')
@@ -230,6 +230,7 @@ if(isUser2Array.length > 0){
 console.log("checkPair Success" + usersPair)
 usersPair = String(usersPair)
 main.currentPair = usersPair;
+main.counter += 1;
   return new Promise(resolve => {
     setTimeout(() => {
       resolve('resolved');

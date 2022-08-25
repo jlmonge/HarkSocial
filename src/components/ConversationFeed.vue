@@ -7,22 +7,29 @@ import firebase from 'firebase/compat';
 const user = firebase.auth().currentUser.email
 import Prompt from './Prompt.vue'
 import { userStore } from '../stores/UserStore';
+import {ref} from 'vue'
 const main = userStore();
+const componentKey = ref(0);
+
+const forceRerender = () => {
+  componentKey.value += 1;
+};
 </script>
 
 <template>
     <Prompt></Prompt>
+    <button @click="forceRerender()">Refresh</button>
     <div id="conversation-feed">
         <div id="user1">
             <p>{{main.email}}</p>
-            <AudioVisualizer></AudioVisualizer>
+            <AudioVisualizer :key="componentKey"></AudioVisualizer>
         </div>
         <RouterLink to="record">
             <RaisedButton msg="Record Now"></RaisedButton>
         </RouterLink>
         <div id="user2">
             <p>{{main.currentPair}}</p>
-            <FriendAudio></FriendAudio>
+            <FriendAudio :key="componentKey"></FriendAudio>
         </div>
     </div>
 </template>

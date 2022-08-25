@@ -3,16 +3,17 @@
     import { getDownloadURL, getStorage, ref } from "firebase/storage";
     //import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
     import firebase from 'firebase/compat';
+    import { userStore } from "../stores/UserStore";
     const storage = getStorage();
     const storageRef = ref(storage);
-
+    const main = userStore();
     // const today = new Date();
     // const date = `${today.getFullYear()}` + `${(today.getMonth() + 1)}` + `${today.getDate()}`
     // const user = firebase.auth().currentUser.uid
 
-    const friendPath = 'fj0AeA6ByHeoau69rMZu0ZcYw5z12022816'
+    const friendPath = main.currentPair
 
-    const friendAudioRef = ref(storageRef, `${ friendPath }`)
+    const friendAudioRef = ref(storageRef, `${friendPath + main.email }`)
 
     getDownloadURL(friendAudioRef)
         .then((url) => {
