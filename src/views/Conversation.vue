@@ -6,11 +6,10 @@ import NavBar from '../components/NavBar.vue';
 import { userStore } from '../stores/UserStore.js'
 const main = userStore();
 
-import { getFirestore, collection, getDocs, updateDoc, query, where, snapshotEqual } from '@firebase/firestore'
+import { getFirestore, collection, getDocs, updateDoc, query, where } from '@firebase/firestore'
 const db = getFirestore()
 const userRef = collection(db, 'users')
 const pairsRef = collection(db, 'pairs')
-// const friendsCollection = query(collection(db, 'friends'))
 const pairsCollection = query(collection(db, 'pairs'))
 const friendsCollection = query(collection(db, 'friends'))
 const allUsers = []
@@ -50,6 +49,7 @@ async function shuckle() {
             let paired = false
             let userPaired = false
             let pairExists = false
+            let currentPairID
             let currentPair
 
             // Construct user's friendsList
@@ -70,6 +70,7 @@ async function shuckle() {
             const pairsResponse1 = await getDocs(pairsCollection1)
             if(!pairsResponse1.empty) {
                 pairsResponse1.forEach((responseItem) => {
+                    currentPairID = responseItem.id
                     currentPair = responseItem.data().pair2
                 })
             }
@@ -78,28 +79,43 @@ async function shuckle() {
             const pairsResponse2 = await getDocs(pairsCollection2)
             if(!pairsResponse2.empty) {
                 pairsResponse2.forEach((responseItem) => {
+                    currentPairID = responseItem.id
                     currentPair = responseItem.data().pair1
                 })
             }
 
-            // Pair these fuckers
+            // console.log('currentPair (responseItem): ' + currentPair)
+            // console.log('currentPair.id: ' + currentPair.id)
+            // console.log('currentPair.data(): ' + currentPair.data())
+            // console.log('currentPair.data().id: ' + currentPair.data().id)
+            //console.log(typeof currentPair.id)
+
+            // Find a pairing for the user
             while ( !paired ) {
                 // Assign the user a potential pair
                 let random = Math.floor(Math.random() * user.friendsList.length)
                 let potentialPair = friendsList[random]
 
+                // Check if potential pair is the current pair
+                if (potentialPair === currentPair) {
+                    console.log('potential is current pair')
+                    continue
+                }
+
                 // Check if the {user, potentialPair} already exists
                 for (let i = 0; i < allPairs.length; i++) {
-                    if ((allPairs[i].pair1 === user.email && allPairs[i].pair2 === potentialPair) && allPairs[i].isPair) {
+                    if ((allPairs[i].pair1 === user.email && allPairs[i].pair2 === potentialPair)) {
                         pairExists = true
-                        // await updateDoc(allPairs[i].id, {
+                        // const currentPairRef = doc(db, 'pairs', currentPair.id)
+                        // await updateDoc(currentPairRef, {
                         //         isPair: false
                         //     })
                         //continue pairingLoop
                     }
-                    if ((allPairs[i].pair2 === user.email && allPairs[i].pair1 === potentialPair) && allPairs[i].isPair) {
+                    if ((allPairs[i].pair2 === user.email && allPairs[i].pair1 === potentialPair)) {
                         pairExists = true
-                        // await updateDoc(allPairs[i].id, {
+                        // const currentPairRef = doc(db, 'pairs', currentPair.id)
+                        // await updateDoc(currentPairRef, {
                         //         isPair: false
                         //     })
                         //continue pairingLoop
@@ -135,6 +151,18 @@ async function shuckle() {
             }
         }
         console.log(finalPairs)
+        let turnFalse = []
+        const pairRefResponse = await getDocs(collection(db, 'pairs'))
+        pairRefResponse.forEach((responseItem) => {
+            turnFalse.push(responseItem)
+        })
+        for(let i = 0; i < turnFalse.length; i++) {
+            const currentPairRef = doc(db, 'pairs', turnFalse[i].id)
+            await updateDoc(currentPairRef, {
+                    isPair: false
+                })
+        }
+            
         for (const [key, value] of finalPairs) {
             const pairReference = await addDoc(collection(db, 'pairs'),
                             {
@@ -149,124 +177,124 @@ async function shuckle() {
     }
 }
 
-async function shufflePairs() { 
-            try {
-                for (const user of allUsers) {
-                    // const friendsCollection = query(collection(db, 'friends'))
-                    // const pairsCollection = query(collection(db, 'pairs'))
-                    // Empty friendsList for each user iteration
-                    let friendsList = []
-                    let paired = false
+// async function shufflePairs() { 
+//             try {
+//                 for (const user of allUsers) {
+//                     // const friendsCollection = query(collection(db, 'friends'))
+//                     // const pairsCollection = query(collection(db, 'pairs'))
+//                     // Empty friendsList for each user iteration
+//                     let friendsList = []
+//                     let paired = false
 
-                    // Create query to find user's friends in the case that user1 = user
-                    let friendsCollection1 = query(friendsCollection, where('user1', '==', user.email))
-                    const friendsQueryResponse1 = await getDocs(friendsCollection1)
-                    friendsQueryResponse1.forEach((responseItem) => {
-                        friendsList.push(responseItem.data().user2)
-                    })
+//                     // Create query to find user's friends in the case that user1 = user
+//                     let friendsCollection1 = query(friendsCollection, where('user1', '==', user.email))
+//                     const friendsQueryResponse1 = await getDocs(friendsCollection1)
+//                     friendsQueryResponse1.forEach((responseItem) => {
+//                         friendsList.push(responseItem.data().user2)
+//                     })
 
-                    // Create query to find user's friends in the case that user2 = user
-                    let friendsCollection2 = query(friendsCollection, where('user2', '==', user.email))
-                    const friendsQueryResponse2 = await getDocs(friendsCollection2)
-                    friendsQueryResponse2.forEach((responseItem) => {
-                        friendsList.push(responseItem.data().user1)
-                    })
-                    // User's friendsList is complete
-                    //console.log(user.email + '\'s friendsList: ' + friendsList)
+//                     // Create query to find user's friends in the case that user2 = user
+//                     let friendsCollection2 = query(friendsCollection, where('user2', '==', user.email))
+//                     const friendsQueryResponse2 = await getDocs(friendsCollection2)
+//                     friendsQueryResponse2.forEach((responseItem) => {
+//                         friendsList.push(responseItem.data().user1)
+//                     })
+//                     // User's friendsList is complete
+//                     //console.log(user.email + '\'s friendsList: ' + friendsList)
 
-                    let currentPair
-                    // Pair the user with a random friend
-                    while ( !paired ) {
-                        let random = Math.floor(Math.random() * user.friendsList.length)
-                        let potentialPair = friendsList[random]
+//                     let currentPair
+//                     // Pair the user with a random friend
+//                     while ( !paired ) {
+//                         let random = Math.floor(Math.random() * user.friendsList.length)
+//                         let potentialPair = friendsList[random]
 
-                        // Case that pair1 is the user and pair2 is the user's potential pair
-                        let checkPairQuery1 = query(pairsCollection, where('pair1', '==', user.email), 
-                                                                    where('pair2', '==', potentialPair))
-                        const checkPairQueryResponse1 = await getDocs(checkPairQuery1)
+//                         // Case that pair1 is the user and pair2 is the user's potential pair
+//                         let checkPairQuery1 = query(pairsCollection, where('pair1', '==', user.email), 
+//                                                                     where('pair2', '==', potentialPair))
+//                         const checkPairQueryResponse1 = await getDocs(checkPairQuery1)
 
-                        // Enters if query is found and is the current user's pair
-                        if(!checkPairQueryResponse1.empty) {
-                            checkPairQueryResponse1.forEach((responseItem) => {
-                                if(responseItem.data().isPair) {
-                                    currentPair = responseItem
-                                    console.log(user.email + '\'s current partner is: ' + currentPair.data().pair2)
-                                    console.log(currentPair.id)
-                                }
-                            })
-                        }
+//                         // Enters if query is found and is the current user's pair
+//                         if(!checkPairQueryResponse1.empty) {
+//                             checkPairQueryResponse1.forEach((responseItem) => {
+//                                 if(responseItem.data().isPair) {
+//                                     currentPair = responseItem
+//                                     console.log(user.email + '\'s current partner is: ' + currentPair.data().pair2)
+//                                     console.log(currentPair.id)
+//                                 }
+//                             })
+//                         }
                         
-                        // Case that pair2 is the user and pair1 is the user's potential pair
-                        let checkPairQuery2 = query(pairsCollection, where('pair2', '==', user.email), 
-                                                                    where('pair1', '==', potentialPair))
-                        const checkPairQueryResponse2 = await getDocs(checkPairQuery2)
+//                         // Case that pair2 is the user and pair1 is the user's potential pair
+//                         let checkPairQuery2 = query(pairsCollection, where('pair2', '==', user.email), 
+//                                                                     where('pair1', '==', potentialPair))
+//                         const checkPairQueryResponse2 = await getDocs(checkPairQuery2)
 
-                        // Enters if query is found and is the current user's pair
-                        if(!checkPairQueryResponse2.empty) {
-                            checkPairQueryResponse2.forEach((responseItem) => {
-                                if(responseItem.data().isPair) {
-                                    currentPair = responseItem
-                                    console.log(user.email + '\'s current partner is: ' + currentPair.data().pair1)
-                                    console.log(currentPair.id)
-                                }
-                            })
-                        }
+//                         // Enters if query is found and is the current user's pair
+//                         if(!checkPairQueryResponse2.empty) {
+//                             checkPairQueryResponse2.forEach((responseItem) => {
+//                                 if(responseItem.data().isPair) {
+//                                     currentPair = responseItem
+//                                     console.log(user.email + '\'s current partner is: ' + currentPair.data().pair1)
+//                                     console.log(currentPair.id)
+//                                 }
+//                             })
+//                         }
 
-                        // Enters if the {user, friend} pair does not exist in the pairs collection
-                        if (checkPairQueryResponse1.empty && checkPairQueryResponse2.empty) {
-                            console.log(user.email + ' and ' + potentialPair + ' is a new pairing in the collection')
-                            // addDoc and set the isPair field to true
-                            // const pairReference = await addDoc(
-                            //     collection(db, 'pairs'),
-                            //     {
-                            //     isPair: true,
-                            //     pair1: user.email,
-                            //     pair2: potentialPair,
+//                         // Enters if the {user, friend} pair does not exist in the pairs collection
+//                         if (checkPairQueryResponse1.empty && checkPairQueryResponse2.empty) {
+//                             console.log(user.email + ' and ' + potentialPair + ' is a new pairing in the collection')
+//                             // addDoc and set the isPair field to true
+//                             // const pairReference = await addDoc(
+//                             //     collection(db, 'pairs'),
+//                             //     {
+//                             //     isPair: true,
+//                             //     pair1: user.email,
+//                             //     pair2: potentialPair,
 
-                            //     }
-                            // )
-                            // updateDoc(currentPair.id, {
-                            //     isPair: false
-                            // })
-                            console.log('Pairing: ' + user.email + ' and ' + potentialPair + ' is added')
-                            paired = true
-                        }
+//                             //     }
+//                             // )
+//                             // updateDoc(currentPair.id, {
+//                             //     isPair: false
+//                             // })
+//                             console.log('Pairing: ' + user.email + ' and ' + potentialPair + ' is added')
+//                             paired = true
+//                         }
 
-                        // Enters if the {user, friend} pair exists in the pairs collection
-                        if (!checkPairQueryResponse1.empty){
-                            checkPairQueryResponse1.forEach((responseItem) => {
-                                //console.log(user.email + '\'s current partner is: ' + currentPair)
-                                if(responseItem.data().isPair === false && responseItem.data().pair2 == currentPair.data().pair2) {
-                                    console.log(responseItem.id)
-                                    // updateDoc and update isPair to true
-                                    // updateDoc(responseItem.id, {
-                                    //     isPair: true
-                                    // })
-                                    paired = true
-                                }
-                            })
-                        }
-                        if (!checkPairQueryResponse2.empty){
-                            checkPairQueryResponse2.forEach((responseItem) => {
-                                //console.log(user.email + '\'s current partner is: ' + currentPair)
-                                if(responseItem.data().isPair === false && responseItem.data().pair1 == currentPair.data().pair1) {
-                                    console.log(responseItem.id)
-                                    // updateDoc and update isPair to true
-                                    // updateDoc(responseItem.id, {
-                                    //     isPair: true
-                                    // })
-                                    paired = true
-                                }
-                            })
-                        }
-                        //paired = true
-                    }
-                }
-            }
-            catch(err) {
-                console.log(err)
-            }
-        }
+//                         // Enters if the {user, friend} pair exists in the pairs collection
+//                         if (!checkPairQueryResponse1.empty){
+//                             checkPairQueryResponse1.forEach((responseItem) => {
+//                                 //console.log(user.email + '\'s current partner is: ' + currentPair)
+//                                 if(responseItem.data().isPair === false && responseItem.data().pair2 == currentPair.data().pair2) {
+//                                     console.log(responseItem.id)
+//                                     // updateDoc and update isPair to true
+//                                     // updateDoc(responseItem.id, {
+//                                     //     isPair: true
+//                                     // })
+//                                     paired = true
+//                                 }
+//                             })
+//                         }
+//                         if (!checkPairQueryResponse2.empty){
+//                             checkPairQueryResponse2.forEach((responseItem) => {
+//                                 //console.log(user.email + '\'s current partner is: ' + currentPair)
+//                                 if(responseItem.data().isPair === false && responseItem.data().pair1 == currentPair.data().pair1) {
+//                                     console.log(responseItem.id)
+//                                     // updateDoc and update isPair to true
+//                                     // updateDoc(responseItem.id, {
+//                                     //     isPair: true
+//                                     // })
+//                                     paired = true
+//                                 }
+//                             })
+//                         }
+//                         //paired = true
+//                     }
+//                 }
+//             }
+//             catch(err) {
+//                 console.log(err)
+//             }
+//         }
 
 // function shufflePairs() { 
 //     allUsers.forEach(user => {
@@ -297,8 +325,7 @@ async function shufflePairs() {
 //             }
 //         }
 //         console.log(user.email + '\'s current pair is: ' + currentPair)
-
-//         // Pair these fuckers
+//
 //         while( !paired ) {
 //             // Assign a random friend to be matched with the user
 //             let random = Math.floor(Math.random() * user.friendsList.length)
