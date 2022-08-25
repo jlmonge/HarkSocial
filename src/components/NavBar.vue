@@ -36,8 +36,7 @@ else {
 //   })
   const signOut = () => {
     firebase.auth().signOut()
-    main.email = undefined;
-    main.isLoggedIn = undefined;
+    main.logOut()
     console.log('signed out returning to home page')
     router.push('/')
   }

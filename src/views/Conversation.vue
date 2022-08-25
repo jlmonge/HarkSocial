@@ -10,7 +10,7 @@ import { getFirestore, collection, getDocs, updateDoc, query, where } from '@fir
 const db = getFirestore()
 const userRef = collection(db, 'users')
 const pairsRef = collection(db, 'pairs')
-const pairsCollection = query(collection(db, 'pairs'))
+const pairCollection = query(collection(db, 'pairs'))
 const friendsCollection = query(collection(db, 'friends'))
 const allUsers = []
 const allPairs = []
@@ -176,7 +176,66 @@ async function shuckle() {
         console.log(err)
     }
 }
+async function checkPair(currentUser) {
+    let usersPair = [];
+    console.log("running getfriends")
+    console.log(currentUser)
+    currentUser = String(currentUser);
+    let isUser1QuerySnapshot;
+    let isUser2QuerySnapshot;
+  let isUser1 = query(pairCollection,where('pair1', '==',currentUser), where('isPair','==',true));
+  let isUser2 = query(pairCollection,where('pair2', '==', currentUser), where('isPair','==',true));
 
+
+console.log('query successful')
+console.log('attempt snapshot')
+isUser1QuerySnapshot  = await getDocs(isUser1);
+isUser2QuerySnapshot  = await getDocs(isUser2);
+
+console.log('snapshot')
+
+const isUser1Array = [];
+const isUser2Array = [];
+isUser1QuerySnapshot.forEach((responseItem)=>{
+isUser1Array.push(responseItem.data());
+console.log(responseItem.data())
+})
+isUser2QuerySnapshot.forEach((responseItem)=>{
+isUser2Array.push(responseItem.data());
+console.log(responseItem.data())
+})
+console.log("check response item print")
+
+console.log(isUser1Array)
+// console.log(isUser2Array[0].pair1)
+console.log("check done array")
+
+if(isUser1Array.length > 0){
+    if(isUser1Array[0].pair1 != null && isUser1Array[0].pair1 === currentUser){
+        usersPair = isUser1Array[0].pair2
+    }
+    if(isUser1Array[0].pair2 != null && isUser1Array[0].pair2 === currentUser){
+        usersPair = isUser1Array[0].pair1
+    }
+}
+if(isUser2Array.length > 0){
+    if(isUser2Array[0].pair1 === currentUser){
+        usersPair = isUser2Array[0].pair2
+    }
+    if(isUser2Array[0].pair2 === currentUser){
+        usersPair = isUser2Array[0].pair1
+    }
+}
+
+console.log("checkPair Success" + usersPair)
+usersPair = String(usersPair)
+main.currentPair = usersPair;
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 2000);
+  });
+}
 // async function shufflePairs() { 
 //             try {
 //                 for (const user of allUsers) {
